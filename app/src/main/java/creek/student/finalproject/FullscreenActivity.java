@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -32,6 +33,9 @@ public class FullscreenActivity extends AppCompatActivity {
     private int count = 0;
     private ImageView view;
     private ConstraintLayout constraintLayout;
+    private boolean isPlaying;
+    private ArrayList<Block> blocks = new ArrayList<Block>();
+    private boolean goingUp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
