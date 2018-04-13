@@ -8,11 +8,11 @@ public abstract class Item {
     void hit(){
 
     }
-    int getPosX(){
-        System.out.println(xPos);
-        return xPos;
-    }
-    int getPosY(){
-        return yPos;
-    }
+    //int getPosX(){
+        //System.out.println(xPos);
+        //return xPos;
+    //}
+    //int getPosY(){
+        //return yPos;
+    //}
 }

@@ -13,12 +13,12 @@ public class Block extends Item {
     private int blockType;
 
     void hit() {
-        if (FullscreenActivity.goingUp == true) {
+        //if (FullscreenActivity.goingUp == true) {
             isHit=true;
-        }
-        else{
+        //}
+        //else{
             //player.hit
-        }
+        //}
 
     }
 }
