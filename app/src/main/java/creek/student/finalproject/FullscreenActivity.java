@@ -54,7 +54,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 startTimer();
                 count++;
             } finally {
-                if (count >= 286 * 5 + 93) stopRepeatingTask();
+                if (count >= 286 * 6 + 93) stopRepeatingTask();
                 else mHandler.postDelayed(mStatusChecker, 10);
             }
         }
