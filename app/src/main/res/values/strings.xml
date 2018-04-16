@@ -7,4 +7,7 @@
     <string name="dummy_content">DUMMY\nCONTENT</string>
 
     <string name="title_activity_main_menu">MainMenu</string>
+
+    <string name="block">block</string>
+    <string name="drill">drill</string>
 </resources>
