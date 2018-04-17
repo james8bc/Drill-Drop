@@ -1,9 +1,12 @@
 package creek.student.finalproject;
 
+import android.graphics.PointF;
+
 import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.PointF;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.ActionBar;
@@ -39,6 +42,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isPlaying;
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private static boolean goingUp;
+    private ImageView drill;
+    private ImageView box;
 
     public static boolean isGoingUp(){
         return goingUp;
@@ -50,9 +55,35 @@ public class FullscreenActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         view = (findViewById(R.id.tableRow1));
+        drill = (findViewById(R.id.drill));
+        box = (findViewById(R.id.hitBox));
         constraintLayout = findViewById(R.id.constraintLayout8);
         mHandler = new Handler();
         startRepeatingTask();
+        box.setOnTouchListener(new View.OnTouchListener() {
+            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
+            PointF StartPT = new PointF(); // Record Start Position of 'img'
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        Log.i("yeah", StartPT.toString());
+                        drill.setX((int) (event.getX() - event.getX() * 0.3));
+                        //drill.setY((int)(StartPT.y + event.getY() - DownPT.y));
+                        StartPT.set(drill.getX(), drill.getY());
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Nothing have to do
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     Runnable mStatusChecker = new Runnable() {
@@ -96,4 +127,5 @@ public class FullscreenActivity extends AppCompatActivity {
         constraintSet.connect(row, ConstraintSet.TOP, R.id.constraintLayout8, ConstraintSet.TOP, start);
         constraintSet.applyTo(constraintLayout);
     }
+
 }

@@ -10,4 +10,5 @@
 
     <string name="block">block</string>
     <string name="drill">drill</string>
+    <string name="hitBox">drill</string>
 </resources>
