@@ -62,8 +62,8 @@ public class FullscreenActivity extends AppCompatActivity {
                 move();
                 count++;
             } finally {
-                if (count >= 286 * 5 + 3000 + 93) stop();
-                else mHandler.postDelayed(mStatusChecker, 0);
+                if (count >= 286 * 5 + 50 + 93) stop();
+                else mHandler.postDelayed(mStatusChecker, 10);
             }
         }
     };
@@ -77,17 +77,8 @@ public class FullscreenActivity extends AppCompatActivity {
     }
 
     private void move() {
-        if(margin == 0 && row == R.id.tableRow5 && goingUp) {
+        if(margin == 0 && row == R.id.tableRow5 && goingUp)
             goingUp = false;
-            margin = 1500;
-            ConstraintSet constraintSet = new ConstraintSet();
-            constraintSet.clone(constraintLayout);
-            constraintSet.connect(2131165323, ConstraintSet.BOTTOM, 2131165324, ConstraintSet.TOP);
-            constraintSet.connect(2131165324, ConstraintSet.BOTTOM, 2131165325, ConstraintSet.TOP);
-            constraintSet.connect(2131165325, ConstraintSet.BOTTOM, 2131165326, ConstraintSet.TOP);
-            constraintSet.connect(2131165326, ConstraintSet.BOTTOM, 2131165327, ConstraintSet.TOP);
-            constraintSet.applyTo(constraintLayout);
-        }
 
         if(margin == 0 && goingUp){
             margin = 286;
@@ -96,28 +87,30 @@ public class FullscreenActivity extends AppCompatActivity {
             Log.i("BLAH", "FUCKING WORK ALREADY PLEASE" + row);
         }
 
-        /*if(margin == 10 && !goingUp){
+        if(margin == 10 && !goingUp){
             margin = 0;
             view = findViewById(row);
             row = row - 1;
             Log.i("BLAH", "FUCKING WORK ALREADY PLEASE GOING DOWN" + row);
-        }*/
+        }
 
         if(goingUp)
             changeConstraint(R.id.constraintLayout8);
         if(!goingUp)
             changeConstraint(row - 1);
     }
+
     private void changeConstraint(int connection){
-        margin--;
+        if(goingUp)
+            margin--;
+        if(!goingUp)
+            margin++;
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
         if(goingUp)
             constraintSet.connect(row, ConstraintSet.TOP, R.id.constraintLayout8, ConstraintSet.TOP, margin);
-        else {
-            constraintSet.connect(2131165327, ConstraintSet.BOTTOM, R.id.constraintLayout8, ConstraintSet.BOTTOM, margin);
-            Log.i("Row", "" + margin);
-        }
+        else
+            constraintSet.connect(row, ConstraintSet.BOTTOM, connection, ConstraintSet.TOP, margin);
         constraintSet.applyTo(constraintLayout);
         //Log.i("Row", "" + margin);
     }

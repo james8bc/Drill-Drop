@@ -359,22 +359,17 @@
             android:id="@+id/button2"
             android:layout_width="65dp"
             android:layout_height="65dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="10dp"
             android:background="@android:drawable/ic_media_pause"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button"
-            android:layout_marginRight="10dp" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <ImageView
             android:id="@+id/drill"
             android:layout_width="wrap_content"
             android:layout_height="311dp"
-            app:layout_constraintBottom_toTopOf="@+id/tableRow3"
+            android:contentDescription="@string/drill"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button"
-            android:contentDescription="@string/drill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/images" />
