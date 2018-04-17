@@ -374,6 +374,14 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/images" />
 
+        <ImageView
+            android:id="@+id/hitBox"
+            android:layout_width="415dp"
+            android:layout_height="172dp"
+            app:srcCompat="@color/black_overlay"
+            tools:layout_editor_absoluteX="0dp"
+            tools:layout_editor_absoluteY="85dp" />
+
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

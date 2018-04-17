@@ -39,6 +39,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isPlaying;
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private static boolean goingUp = true;
+    private ImageView drill;
+    private ImageView box;
 
     public static boolean isGoingUp(){
         return goingUp;
@@ -50,9 +52,35 @@ public class FullscreenActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.hide();
         view = (findViewById(R.id.tableRow1));
+        drill = (findViewById(R.id.drill));
+        box = (findViewById(R.id.hitBox));
         constraintLayout = findViewById(R.id.constraintLayout8);
         mHandler = new Handler();
         start();
+        box.setOnTouchListener(new View.OnTouchListener() {
+            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
+            PointF StartPT = new PointF(); // Record Start Position of 'img'
+
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
+                        Log.i("yeah", StartPT.toString());
+                        drill.setX((int) (event.getX() - event.getX() * 0.3));
+                        //drill.setY((int)(StartPT.y + event.getY() - DownPT.y));
+                        StartPT.set(drill.getX(), drill.getY());
+                        break;
+
+                    case MotionEvent.ACTION_UP:
+                        // Nothing have to do
+                        break;
+                    default:
+                        break;
+                }
+                return true;
+            }
+        });
     }
 
     Runnable mStatusChecker = new Runnable() {
