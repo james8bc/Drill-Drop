@@ -48,6 +48,10 @@ public class FullscreenActivity extends AppCompatActivity {
     public static boolean isGoingUp(){
         return goingUp;
     }
+    public static void changeGoingUp(boolean change){
+        goingUp=change;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
