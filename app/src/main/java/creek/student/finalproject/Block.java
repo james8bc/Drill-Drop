@@ -10,8 +10,11 @@ public class Block extends Item {
     private int xPos;
     private int yPos;
     private boolean isHit;
-    private int blockType;
+    private BlockType blockType;
 
+    public Block(BlockType type){
+        blockType = type;
+    }
     void hit(Item x) {
         if (FullscreenActivity.isGoingUp() == true&&xPos==) {
             isHit=true;
@@ -19,6 +22,10 @@ public class Block extends Item {
         else{
             //player.hit
         }
-
     }
+
+    public Image getImage(){
+        return blockType.getImage();
+    }
+
 }

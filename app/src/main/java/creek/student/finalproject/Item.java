@@ -7,6 +7,7 @@ package creek.student.finalproject;
 public abstract class Item {
     private int xPos;
     private int yPos;
+    private Image image;
     void hit(){
 
     }
@@ -16,5 +17,9 @@ public abstract class Item {
     }
     int getPosY(){
         return yPos;
+    }
+
+    public Image getImage(){
+        return image;
     }
 }

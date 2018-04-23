@@ -379,8 +379,8 @@
             android:layout_width="415dp"
             android:layout_height="172dp"
             app:srcCompat="@color/black_overlay"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="85dp" />
+            tools:layout_editor_absoluteX="1dp"
+            tools:layout_editor_absoluteY="86dp" />
 
     </android.support.constraint.ConstraintLayout>
 
