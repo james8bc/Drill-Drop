@@ -1,17 +1,19 @@
 package creek.student.finalproject;
 
+import android.app.Activity;
 import android.graphics.Color;
 
 
-/**
- * Created by student on 4/17/18.
- */
-
-public class BlockType extends Block {
+public class BlockType {
     private String name;
     private Image image;
     private Color color;
     private int pointsGained;
+
+    public BlockType(int id, Activity _activity) {
+        image = new Image(id, _activity);
+    }
+
     public int getPoitnsGained(){
         return pointsGained;
     }
