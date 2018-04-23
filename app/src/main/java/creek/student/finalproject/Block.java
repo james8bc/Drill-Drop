@@ -12,8 +12,8 @@ public class Block extends Item {
     private boolean isHit;
     private int blockType;
 
-    void hit() {
-        if (FullscreenActivity.isGoingUp() == true) {
+    void hit(Item) {
+        if (FullscreenActivity.isGoingUp() == true&&xPos==) {
             isHit=true;
         }
         else{
