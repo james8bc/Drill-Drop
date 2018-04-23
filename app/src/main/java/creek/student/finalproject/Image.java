@@ -13,5 +13,22 @@ public class Image {
     private String imagePath;
     private int ySize;
     private int xSize;
+    public Image(int ID){
+        imageViewId = ID;
+    }
+    public int getImageViewId() {
+        return imageViewId;
+    }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public int getxSize() {
+        return xSize;
+    }
+
+    public int getySize() {
+        return ySize;
+    }
 }
