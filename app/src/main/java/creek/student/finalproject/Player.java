@@ -21,8 +21,12 @@ public class Player extends Item {
         super.setup(id, _activity);
     }
 
+
     public void kill(){
         FullscreenActivity.changeGoingUp();
+    }
+    public Image getImage(){
+        return image;
     }
     public void hit(){
         lives--;
@@ -35,9 +39,17 @@ public class Player extends Item {
         return lives;
     }
     public boolean intersected(Block b){
-        Rect r1 = new Rect(b.getPosX(),b.getPosY(),b.getPosX()+b.getImage().getxSize(),b.getPosY()+b.getImage().getySize());
-        Rect r2 = new Rect(xPos,yPos,xPos+image.getxSize(),yPos+image.getySize());
-        return Rect.intersects(r1, r2);
+        Rect rc1 = new Rect();
+        image.getImageView().getDrawingRect(rc1);
+        Rect rc2 = new Rect();
+        b.getImage().getImageView().getDrawingRect(rc2);
+        //if (Rect.intersects(rc1, rc2)) {
+            // intersection is detected
+            // here is your method call
+       // }
+        //Rect r1 = new Rect(b.getPosX(),b.getPosY(),b.getPosX()+b.getImage().getxSize(),b.getPosY()+b.getImage().getySize());
+        //Rect r2 = new Rect(xPos,yPos,xPos+image.getxSize(),yPos+image.getySize());
+        return Rect.intersects(rc1, rc2);
     }
 
 }

@@ -1,12 +1,23 @@
 package creek.student.finalproject;
 
+import android.app.Activity;
+import android.content.Context;
+import android.content.res.Resources;
+import android.graphics.Point;
+import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
 import android.support.constraint.ConstraintSet;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Display;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import java.util.ArrayList;
 
@@ -22,6 +33,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private boolean isPlaying;
     private static boolean goingUp = true;
     private Handler mHandler;
+    private ImageView img;
     private ConstraintLayout constraintLayout;
     private ArrayList<Block> blocks = new ArrayList<>();
     private Player player;
@@ -34,9 +46,11 @@ public class FullscreenActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
         player = new Player(R.id.drill, this);
+        img = player.getImage().getImageView();
         constraintLayout = findViewById(R.id.constraintLayout8);
         mHandler = new Handler();
-        start();
+        start(); imageMove();
+
     }
 
     public static boolean isGoingUp(){
@@ -101,4 +115,41 @@ public class FullscreenActivity extends AppCompatActivity {
         }
         constraintSet.applyTo(constraintLayout);
     }
+
+
+
+    private void imageMove(){
+        constraintLayout.setOnTouchListener(new View.OnTouchListener()
+        {
+            PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
+            PointF StartPT = new PointF(); // Record Start Position of 'img'
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+            int width = metrics.widthPixels;
+            @Override
+            public boolean onTouch(View v, MotionEvent event)
+            {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_MOVE :
+                        if(StartPT.x + event.getX() - DownPT.x >= width || StartPT.x + event.getX() - DownPT.x <= 0){
+                            break;
+                        }
+                        StartPT.set(img.getX(), img.getY());
+                        img.setX((int)(StartPT.x + event.getX() - DownPT.x));
+                        StartPT.set( img.getX(), img.getY() );
+                        break;
+                    case MotionEvent.ACTION_DOWN :
+                        DownPT.set( event.getX(), event.getY() );
+                        StartPT.set( img.getX(), img.getY() );
+                        break;
+                    case MotionEvent.ACTION_UP :
+                        // Nothing have to do
+                        break;
+                    default :
+                        break;
+                }
+                return true;
+            }
+        });}
+
 }

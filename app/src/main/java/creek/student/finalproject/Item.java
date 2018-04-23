@@ -26,7 +26,4 @@ public abstract class Item {
         return yPos;
     }
 
-    public Image getImage(){
-        return image;
-    }
 }
