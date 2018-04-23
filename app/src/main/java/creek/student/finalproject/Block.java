@@ -12,7 +12,7 @@ public class Block extends Item {
     private boolean isHit;
     private int blockType;
 
-    void hit(Item) {
+    void hit(Item x) {
         if (FullscreenActivity.isGoingUp() == true&&xPos==) {
             isHit=true;
         }
