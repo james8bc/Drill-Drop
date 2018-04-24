@@ -115,3 +115,18 @@ public class FullscreenActivity extends AppCompatActivity {
         //Log.i("Row", "" + margin);
     }
 }
+
+
+        Rect rc1 = new Rect();
+        Rect rc2 = new Rect();
+        ImageView drill = image.getImageView();
+        ImageView block = b.getImage();
+        Imaz
+        rc1.left = drill.getLeft();
+        rc1.top = drill.getTop();
+        rc1.bottom = drill.getBottom();
+        rc1.right = drill.getRight();
+        rc2.left = block.getLeft();
+        rc2.top = block.getTop();
+        rc2.bottom = block.getBottom();
+        rc2.right = block.getRight();

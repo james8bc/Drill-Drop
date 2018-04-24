@@ -27,10 +27,10 @@ public class Image {
     }
 
     public int getxSize() {
-        return (int)view.getX();
+        return view.getWidth();
     }
 
     public int getySize() {
-        return (int)view.getY();
+       return view.getHeight();
     }
 }

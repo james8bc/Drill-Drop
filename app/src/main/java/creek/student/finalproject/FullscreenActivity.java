@@ -1,9 +1,5 @@
 package creek.student.finalproject;
 
-import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Point;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,11 +9,10 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
-import android.view.Display;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -26,11 +21,12 @@ import java.util.ArrayList;
  * status bar and navigation/system bar) with user interaction.
  */
 public class FullscreenActivity extends AppCompatActivity {
+    private int maxRow;
     private int level = 1;
-    private int margin = 93;
+    private int margin = 450;
     private int row = R.id.tableRow1;
     private int count = 0;
-    private boolean isPlaying;
+    private boolean isPlaying = true;
     private static boolean goingUp = true;
     private Handler mHandler;
     private ImageView img;
@@ -43,13 +39,14 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
         ActionBar actionBar = getSupportActionBar();
+        maxRow = R.id.tableRow5;
         assert actionBar != null;
         actionBar.hide();
         player = new Player(R.id.drill, this);
         img = player.getImage().getImageView();
         constraintLayout = findViewById(R.id.constraintLayout8);
         mHandler = new Handler();
-        start(); imageMove();
+        start();
 
     }
 
@@ -80,14 +77,23 @@ public class FullscreenActivity extends AppCompatActivity {
 
     private void move() {
 
-        for(int i = R.id.imageView; i <= R.id.imageView20; i++){
+        imageMove();
+
+        //player = new Player(R.id.drill, this);
+        for(int i = R.id.imageView; i <= R.id.imageView9; i++){
             Block block = new Block(i, this);
+            player.update();
+            block.update();
+
             if(player.intersected(block)) {
                 Log.e("Hit", i + " was hit!");
+                //
+                //block.hit();
             }
         }
         count++;
-        if(margin == 0 && row == R.id.tableRow5 && goingUp) { goingUp = false; }
+        if(margin == 0 && row == maxRow && goingUp) { goingUp = false; }
+        //else if(margin == 640 && row == R.id.tableRow1 && !goingUp) { stop(); }
         if(margin == 0 && goingUp){
             margin = 286;
             row = row + 1;
@@ -116,10 +122,21 @@ public class FullscreenActivity extends AppCompatActivity {
         constraintSet.applyTo(constraintLayout);
     }
 
+    public void pause(View v)
+    {
+        if(isPlaying){
+            isPlaying = false;
 
+            stop();
+        }
+        else{
+            start();
+        }
+    }
 
     private void imageMove(){
-        constraintLayout.setOnTouchListener(new View.OnTouchListener()
+
+        img.setOnTouchListener(new View.OnTouchListener()
         {
             PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
             PointF StartPT = new PointF(); // Record Start Position of 'img'
@@ -131,9 +148,9 @@ public class FullscreenActivity extends AppCompatActivity {
                 switch (event.getAction())
                 {
                     case MotionEvent.ACTION_MOVE :
-                        if(StartPT.x + event.getX() - DownPT.x >= width || StartPT.x + event.getX() - DownPT.x <= 0){
-                            break;
-                        }
+                        //if(StartPT.x + event.getX() - DownPT.x >= width || StartPT.x + event.getX() - DownPT.x <= 0){
+                            //break;
+                        //}
                         StartPT.set(img.getX(), img.getY());
                         img.setX((int)(StartPT.x + event.getX() - DownPT.x));
                         StartPT.set( img.getX(), img.getY() );
@@ -148,8 +165,9 @@ public class FullscreenActivity extends AppCompatActivity {
                     default :
                         break;
                 }
-                return true;
-            }
-        });}
 
+            return true;
+            }
+
+        });}
 }

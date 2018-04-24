@@ -2,6 +2,7 @@ package creek.student.finalproject;
 
 import android.app.Activity;
 import android.content.ClipData;
+import android.view.View;
 import android.widget.ImageView;
 
 public class Block extends Item {
@@ -20,10 +21,18 @@ public class Block extends Item {
         view = this.activity.findViewById(imageId);
         xPos = (int)view.getX();
         yPos = (int)view.getY();
+        super.setup(id, _activity);
     }
-    void hit(Item x) {
+    void update(){
+        blockType = new BlockType(imageId, this.activity);
+        view = this.activity.findViewById(imageId);
+        xPos = (int)view.getX();
+        yPos = (int)view.getY();
+    }
+    void hit() {
         if (FullscreenActivity.isGoingUp()) {
             isHit=true;
+            view.setVisibility(ImageView.GONE);
         }
         else{
             imageId = imageId;
@@ -35,4 +44,10 @@ public class Block extends Item {
         return blockType.getImage();
     }
 
+    int getPosX(){
+        return xPos;
+    }
+    int getPosY(){
+        return yPos;
+    }
 }
