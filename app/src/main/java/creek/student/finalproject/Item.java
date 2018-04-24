@@ -1,25 +1,27 @@
 package creek.student.finalproject;
 
-/**
- * Created by student on 4/13/18.
- */
+import android.app.Activity;
+import android.widget.ImageView;
 
 public abstract class Item {
-    private int xPos;
-    private int yPos;
+    //private int xPos;
+    //private int yPos;
     private Image image;
-    void hit(){
+    private int idImageView;
 
-    }
-    int getPosX(){
-        System.out.println(xPos);
-        return xPos;
-    }
-    int getPosY(){
-        return yPos;
+    public void setup(int Id, Activity _activity){
+        idImageView = Id;
+        //ImageView view = _activity.findViewById(idImageView);
+        //xPos = (int)view.getX();
+        //yPos = (int)view.getY();
     }
 
-    public Image getImage(){
-        return image;
-    }
+    void hit(){}
+    //int getPosX(){
+        //return xPos;
+   // }//
+    //int getPosY(){
+   //     return yPos;
+  //  }
+
 }
