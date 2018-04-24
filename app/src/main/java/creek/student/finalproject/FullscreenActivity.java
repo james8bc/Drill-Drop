@@ -41,6 +41,11 @@ public class FullscreenActivity extends AppCompatActivity {
     private ArrayList<Block> blocks = new ArrayList<Block>();
     private Player player;
 
+    public void blockArray(){
+        for(int i=0;i<100;i++){
+            blocks.add(new Block((BlockType )))
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
