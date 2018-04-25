@@ -1,5 +1,6 @@
 package creek.student.finalproject;
 
+import android.annotation.SuppressLint;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -35,8 +36,8 @@ public class FullscreenActivity extends AppCompatActivity {
     private Player player;
 
     public void blockArray(){
-        for(int i=0;i<100;i++){
-            blocks.add(new Block((BlockType )))
+        for(int i=R.id.imageView;i<=R.id.imageView9;i++){
+            blocks.add(new Block(i, this));
         }
     }
     @Override
@@ -138,7 +139,13 @@ public class FullscreenActivity extends AppCompatActivity {
             start();
         }
     }
-
+    private void createRowConstraint(int oldRow, int newRow){
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+        constraintSet.connect(newRow, ConstraintSet.TOP, oldRow, ConstraintSet.TOP, 10);
+        constraintSet.applyTo(constraintLayout);
+    }
+    @SuppressLint("ClickableViewAccessibility")
     private void imageMove(){
 
         img.setOnTouchListener(new View.OnTouchListener()
