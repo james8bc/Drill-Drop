@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+//todo add main menu functionality, options, and a firstplay check
 public class FullscreenActivity extends AppCompatActivity {
     private int maxRow;
     private int level = 1;
@@ -35,7 +36,7 @@ public class FullscreenActivity extends AppCompatActivity {
     private ArrayList<Block> blocks = new ArrayList<>();
     private Player player;
 
-    public void blockArray(){
+    public void blockArray(){//todo randomly generate an array of different blocktypes
         for(int i=R.id.imageView;i<=R.id.imageView9;i++){
             blocks.add(new Block(i, this));
         }
@@ -65,7 +66,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
     Runnable mStatusChecker = new Runnable() {
         @Override
-        public void run() {
+        public void run() {//todo get correct speed for screen scrolling
             try{ move(); }
             finally {
                 if (count >= 286 * 5 + 5000 + 93) stop();
@@ -81,7 +82,7 @@ public class FullscreenActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mStatusChecker);
     }
 
-    private void move() {
+    private void move() {//todo if drill has finished going up, end level
 
         imageMove();
 
