@@ -47,7 +47,7 @@ public class Player extends Item {
     public int getLives(){
         return lives;
     }
-    public boolean intersected(Block b){
+    public boolean intersected(Block b){ //todo hitboxes working properly
         //rect = new Rect(x, y, x+sprite.getWidth(), y+sprite.getHeight());
        // Rect rc1 = new Rect();
        // Rect rc2 = Sprite

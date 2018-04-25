@@ -16,7 +16,7 @@ public abstract class Item {
         //yPos = (int)view.getY();
     }
 
-    void hit(){}
+   void hit(){}
     //int getPosX(){
         //return xPos;
    // }//

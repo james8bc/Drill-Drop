@@ -13,7 +13,7 @@ public class BlockType {
 
     public BlockType(int id, Activity _activity) {
         image = new Image(id, _activity);
-    }
+    }//todo make sure image gets assigned properly
 
     public int getPoitnsGained(){
         return pointsGained;
