@@ -3,6 +3,7 @@ package creek.student.finalproject;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.util.Log;
 import android.widget.ImageView;
 
 
@@ -41,31 +42,38 @@ public class Player extends Item {
 
     void update(){
         image = new Image(Id, this.activity);
-        xPos = (int)image.getxSize();
-        yPos = (int)image.getySize();
+        xPos = (int)image.getImageView().getX();
+        yPos = (int)image.getImageView().getY();
     }
     public int getLives(){
         return lives;
     }
     public boolean intersected(Block b){ //todo hitboxes working properly
         //rect = new Rect(x, y, x+sprite.getWidth(), y+sprite.getHeight());
-       // Rect rc1 = new Rect();
-       // Rect rc2 = Sprite
+        Rect r1 = new Rect();
+        Rect r2 = new Rect();
         //image.getImageView().getDrawingRect(rc1);
         //b.getImage().getDrawingRect(rc2);
         //if (Rect.intersects(rc1, rc2)) {
             // intersection is detected
             // here is your method call
        // }
-        Rect r1 = new Rect(b.getPosX(), b.getPosY(), b.getPosX() + 80,b.getPosY() + 85);
-        Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
+        if(b.isHit()){
+            return false;
+        }
+        b.update();
+        b.getImage().getImageView().getGlobalVisibleRect(r1);
+        image.getImageView().getGlobalVisibleRect(r2);
+
+        //Log.e("YSIZEBLOCK", b.getImage().getySize() + "");
+        //Log.e("YSIZEDRILL", image.getySize() + "");
+        Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
+        Log.e("YXXXXXXPOSBLOCK", "" + b.getPosX());
+        //Log.e("YPOSDRILL", yPos   + "");
+        //Rect r1 = new Rect(b.getPosX(), b.getPosY(), b.getPosX() + b.getImage().getySize(),b.getPosY() + b.getImage().getySize());
+        //Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
+
         return r1.intersect(r2);
     }
 
-    int getPosX(){
-        return xPos;
-    }
-    int getPosY(){
-        return yPos;
-    }
 }

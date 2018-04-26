@@ -25,15 +25,17 @@ public class FullscreenActivity extends AppCompatActivity {
     private int maxRow;
     private int level = 1;
     private int margin = 450;
-    private int row = R.id.tableRow1;
+    private int row;
     private int count = 0;
     private boolean isPlaying = true;
     private static boolean goingUp = true;
     private Handler mHandler;
     private ImageView img;
     private ConstraintLayout constraintLayout;
-    private ArrayList<Block> blocks = new ArrayList<>();
+    private ArrayList < Block > blocks = new ArrayList < > ();
+    private ArrayList < Block > tableRow = new ArrayList < > ();
     private Player player;
+    int ids[][];
 
     public void blockArray(){
         for(int i=R.id.imageView;i<=R.id.imageView9;i++){
@@ -45,29 +47,36 @@ public class FullscreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
         ActionBar actionBar = getSupportActionBar();
-        maxRow = R.id.tableRow5;
         assert actionBar != null;
         actionBar.hide();
         player = new Player(R.id.drill, this);
         img = player.getImage().getImageView();
+        ids = new int[level + 5][5];
         constraintLayout = findViewById(R.id.constraintLayout8);
+        setupRows();
+        maxRow = ids[ids.length][0];
+        row = ids[0][0];
         mHandler = new Handler();
         start();
 
     }
 
-    public static boolean isGoingUp(){
+    public static boolean isGoingUp() {
         return goingUp;
     }
-    public static void changeGoingUp(){
-        goingUp= true;
+    public static void changeGoingUp() {
+        goingUp = true;
     }
 
+    public void setupRows(){
+        setUpConstraints();
+    }
     Runnable mStatusChecker = new Runnable() {
         @Override
         public void run() {
-            try{ move(); }
-            finally {
+            try {
+                move();
+            } finally {
                 if (count >= 286 * 5 + 5000 + 93) stop();
                 else mHandler.postDelayed(mStatusChecker, 1);
             }
@@ -84,43 +93,43 @@ public class FullscreenActivity extends AppCompatActivity {
     private void move() {
 
         imageMove();
-
         //player = new Player(R.id.drill, this);
-        for(int i = R.id.imageView; i <= R.id.imageView9; i++){
-            Block block = new Block(i, this);
-            player.update();
-            block.update();
+        for (int i = 0; i < ids.length; i++) {
+            for(int j = 1; j < ids[i].length; j++) {
+                Block block = new Block(ids[i][j], this);
+                player.update();
+                block.update();
 
-            if(player.intersected(block)) {
-                Log.e("Hit", i + " was hit!");
-                //
-                //block.hit();
+                if (player.intersected(block)) {
+                    block.hit();
+                }
             }
         }
         count++;
-        if(margin == 0 && row == maxRow && goingUp) { goingUp = false; }
+        if (margin == 0 && row == ids[ids.length][0] && goingUp) {
+            goingUp = false;
+        }
         //else if(margin == 640 && row == R.id.tableRow1 && !goingUp) { stop(); }
-        if(margin == 0 && goingUp){
-            margin = 286;
+        if (margin == 0 && goingUp) {
+            margin = 300;
             row = row + 1;
         }
-        if(margin == 286 && !goingUp){
+        if (margin == 300 && !goingUp) {
             margin = 0;
             row = row - 1;
         }
         changeConstraint();
     }
 
-    private void changeConstraint(){
+    private void changeConstraint() {
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
-        if(goingUp) {
+        if (goingUp) {
             margin--;
             constraintSet.connect(row, ConstraintSet.TOP, R.id.constraintLayout8, ConstraintSet.TOP, margin);
-        }
-        else {
+        } else {
             margin++;
-            if(row == R.id.tableRow1)
+            if (row == ids[0][0])
                 constraintSet.connect(row, ConstraintSet.TOP, R.id.constraintLayout8, ConstraintSet.TOP, margin);
             else
                 constraintSet.connect(row, ConstraintSet.TOP, row - 1, ConstraintSet.TOP, margin);
@@ -128,58 +137,74 @@ public class FullscreenActivity extends AppCompatActivity {
         constraintSet.applyTo(constraintLayout);
     }
 
-    public void pause(View v)
-    {
-        if(isPlaying){
+    public void pause(View v) {
+        if (isPlaying) {
             isPlaying = false;
 
             stop();
-        }
-        else{
+        } else {
             start();
         }
     }
-    private void createRowConstraint(int oldRow, int newRow){
+
+    private void setUpConstraints(){
         ConstraintSet constraintSet = new ConstraintSet();
         constraintSet.clone(constraintLayout);
-        constraintSet.connect(newRow, ConstraintSet.TOP, oldRow, ConstraintSet.TOP, 10);
+        for(int i = 0; i < ids.length; i++){
+            if(i == 0)
+                constraintSet.connect(ids[0][0], ConstraintSet.TOP, R.id.constraintLayout8, ConstraintSet.TOP, 100);
+            else
+                constraintSet.connect(ids[i][0], ConstraintSet.TOP, ids[i - 1][0], ConstraintSet.TOP, 10);
+
+            for(int j = 1; j < ids[i].length; j++){
+                if(j == 0)
+                    constraintSet.connect(ids[i][j], ConstraintSet.LEFT, ids[i][0], ConstraintSet.LEFT, 0);
+                else
+                    constraintSet.connect(ids[i][j], ConstraintSet.LEFT, ids[i][j - 1], ConstraintSet.RIGHT, 0);
+                if(j == ids[i].length - 1)
+                    constraintSet.connect(ids[i][j], ConstraintSet.RIGHT, ids[i][0], ConstraintSet.RIGHT, 0);
+                else
+                    constraintSet.connect(ids[i][j], ConstraintSet.RIGHT, ids[i][j + 1], ConstraintSet.RIGHT, 0);
+                constraintSet.connect(ids[i][j], ConstraintSet.TOP, ids[i][0], ConstraintSet.TOP, 0);
+                constraintSet.connect(ids[i][j], ConstraintSet.BOTTOM, ids[i][0], ConstraintSet.BOTTOM, 0);
+            }
+        }
         constraintSet.applyTo(constraintLayout);
     }
+
+
     @SuppressLint("ClickableViewAccessibility")
     private void imageMove(){
-
-        img.setOnTouchListener(new View.OnTouchListener()
-        {
+        img.setOnTouchListener(new View.OnTouchListener() {
             PointF DownPT = new PointF(); // Record Mouse Position When Pressed Down
             PointF StartPT = new PointF(); // Record Start Position of 'img'
             DisplayMetrics metrics = getResources().getDisplayMetrics();
             int width = metrics.widthPixels;
             @Override
-            public boolean onTouch(View v, MotionEvent event)
-            {
-                switch (event.getAction())
-                {
-                    case MotionEvent.ACTION_MOVE :
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction()) {
+                    case MotionEvent.ACTION_MOVE:
                         //if(StartPT.x + event.getX() - DownPT.x >= width || StartPT.x + event.getX() - DownPT.x <= 0){
                             //break;
                         //}
                         StartPT.set(img.getX(), img.getY());
                         img.setX((int)(StartPT.x + event.getX() - DownPT.x));
-                        StartPT.set( img.getX(), img.getY() );
+                        StartPT.set(img.getX(), img.getY());
                         break;
-                    case MotionEvent.ACTION_DOWN :
-                        DownPT.set( event.getX(), event.getY() );
-                        StartPT.set( img.getX(), img.getY() );
+                    case MotionEvent.ACTION_DOWN:
+                        DownPT.set(event.getX(), event.getY());
+                        StartPT.set(img.getX(), img.getY());
                         break;
-                    case MotionEvent.ACTION_UP :
+                    case MotionEvent.ACTION_UP:
                         // Nothing have to do
                         break;
                     default :
                         break;
                 }
 
-            return true;
+                return true;
             }
 
-        });}
+        });
+    }
 }

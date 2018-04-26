@@ -11,17 +11,16 @@ public abstract class Item {
 
     public void setup(int Id, Activity _activity){
         idImageView = Id;
-        //ImageView view = _activity.findViewById(idImageView);
+        ImageView view = _activity.findViewById(idImageView);
         //xPos = (int)view.getX();
         //yPos = (int)view.getY();
     }
 
-   void hit(){}
-    //int getPosX(){
-        //return xPos;
-   // }//
-    //int getPosY(){
-   //     return yPos;
-  //  }
+   abstract void hit();
 
+   /*int getPosX(){
+       return xPos;
+   }int getPosY(){
+       return yPos;
+    }*/
 }
