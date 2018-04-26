@@ -11,10 +11,10 @@ public class Block extends Item {
     private int yPos;
     private boolean isHit;
     private ImageView view;
-    private BlockType blockType;
+    private BlockType blockType;//todo assign each number of type to the correct blocktype
     private int imageId;
 
-    public Block(int id, Activity _activity){
+    public Block(int id, Activity _activity,int type){
         this.activity = _activity;
         imageId = id;
         blockType = new BlockType(imageId, this.activity);

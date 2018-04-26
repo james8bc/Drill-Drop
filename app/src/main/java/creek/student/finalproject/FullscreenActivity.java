@@ -38,7 +38,15 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void blockArray(){//todo randomly generate an array of different blocktypes
         for(int i=R.id.imageView;i<=R.id.imageView9;i++){
-            blocks.add(new Block(i, this));
+            int r = (int) Math.random();
+            if(r<.5)
+                blocks.add(new Block(i, this,1));
+            if(r>.5&&r<.66)
+                blocks.add(new Block(i, this,2));
+            if(r>.66&&r<.82)
+                blocks.add(new Block(i, this,3));
+            else
+                blocks.add(new Block(i, this,4));
         }
     }
     @Override
@@ -88,7 +96,7 @@ public class FullscreenActivity extends AppCompatActivity {
 
         //player = new Player(R.id.drill, this);
         for(int i = R.id.imageView; i <= R.id.imageView9; i++){
-            Block block = new Block(i, this);
+            Block block = new Block(i, this,1);
             player.update();
             block.update();
 
