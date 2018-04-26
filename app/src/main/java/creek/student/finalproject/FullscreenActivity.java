@@ -21,6 +21,7 @@ import java.util.ArrayList;
  * An example full-screen activity that shows and hides the system UI (i.e.
  * status bar and navigation/system bar) with user interaction.
  */
+//todo add main menu functionality, options, and a firstplay check
 public class FullscreenActivity extends AppCompatActivity {
     private int maxRow;
     private int level = 1;
@@ -37,9 +38,17 @@ public class FullscreenActivity extends AppCompatActivity {
     private Player player;
     int ids[][];
 
-    public void blockArray(){
+    public void blockArray(){//todo randomly generate an array of different blocktypes
         for(int i=R.id.imageView;i<=R.id.imageView9;i++){
-            blocks.add(new Block(i, this));
+            int r = (int) Math.random();
+            if(r<.5)
+                blocks.add(new Block(i, this,1));
+            if(r>.5&&r<.66)
+                blocks.add(new Block(i, this,2));
+            if(r>.66&&r<.82)
+                blocks.add(new Block(i, this,3));
+            else
+                blocks.add(new Block(i, this,4));
         }
     }
     @Override
@@ -73,7 +82,7 @@ public class FullscreenActivity extends AppCompatActivity {
     }
     Runnable mStatusChecker = new Runnable() {
         @Override
-        public void run() {
+        public void run() {//todo get correct speed for screen scrolling
             try {
                 move();
             } finally {
@@ -90,13 +99,13 @@ public class FullscreenActivity extends AppCompatActivity {
         mHandler.removeCallbacks(mStatusChecker);
     }
 
-    private void move() {
+    private void move() {//todo if drill has finished going up, end level
 
         imageMove();
         //player = new Player(R.id.drill, this);
         for (int i = 0; i < ids.length; i++) {
             for(int j = 1; j < ids[i].length; j++) {
-                Block block = new Block(ids[i][j], this);
+                Block block = new Block(ids[i][j], this,1);
                 player.update();
                 block.update();
 

@@ -14,7 +14,7 @@ public class Player extends Item {
     private boolean isAlive;
     private int lives;
     private int Id;
-    private int score;
+    private int score;//todo implement scoring while going down and have each blocktype return the correct score going up
     private Image image;
     public Player(int id, Activity _activity){
         this.activity = _activity;
