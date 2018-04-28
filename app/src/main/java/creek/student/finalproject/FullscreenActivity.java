@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TableRow;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -79,6 +80,18 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void setupRows(){
         setUpConstraints();
+    }
+    public void createRows(int rows){
+        for(int x = 0 ;x< rows; x++){
+            TableRow tempRow = new TableRow(this);
+            ids[x][0]=tempRow.getId();
+            for(int y = 1; y<6;y++){
+                ImageView temp = new ImageView(this);
+                temp.setImageResource(R.drawable.dirt_tile);
+                tempRow.addView(temp);
+                ids[x][y]= temp.getId();
+            }
+        }
     }
     Runnable mStatusChecker = new Runnable() {
         @Override
