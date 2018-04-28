@@ -86,6 +86,7 @@ public class FullscreenActivity extends AppCompatActivity {
                 ImageView temp = new ImageView(this);
                 temp.setImageResource(R.drawable.dirt_tile);
                 tempRow.addView(temp);
+                temp.setId(R.id.imageView20+y);
                 ids[x][y]= temp.getId();
             }
         }
@@ -126,7 +127,7 @@ public class FullscreenActivity extends AppCompatActivity {
             }
         }
         count++;
-        if (margin == 0 && row == ids[ids.length][0] && goingUp) {
+        if (margin == 0 && row == ids[ids.length-1][0] && goingUp) {
             goingUp = false;
         }
         //else if(margin == 640 && row == R.id.tableRow1 && !goingUp) { stop(); }
