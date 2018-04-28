@@ -18,10 +18,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-/**
- * An example full-screen activity that shows and hides the system UI (i.e.
- * status bar and navigation/system bar) with user interaction.
- */
 //todo add main menu functionality, options, and a firstplay check
 public class FullscreenActivity extends AppCompatActivity {
     private int maxRow;
@@ -44,8 +40,8 @@ public class FullscreenActivity extends AppCompatActivity {
             int r = (int) Math.random();
             if(r<.5)
                 blocks.add(new Block(i, this,1));
-            if(r>.5&&r<.66)
-                blocks.add(new Block(i, this,2));
+            if(r>.5&&r<.66)                blocks.add(new Block(i, this,2));
+
             if(r>.66&&r<.82)
                 blocks.add(new Block(i, this,3));
             else
@@ -64,7 +60,7 @@ public class FullscreenActivity extends AppCompatActivity {
         ids = new int[level + 5][5];
         constraintLayout = findViewById(R.id.constraintLayout8);
         setupRows();
-        maxRow = ids[ids.length][0];
+        maxRow = 5;
         row = ids[0][0];
         mHandler = new Handler();
         start();
@@ -80,12 +76,13 @@ public class FullscreenActivity extends AppCompatActivity {
 
     public void setupRows(){
         setUpConstraints();
+        createRows(level +5);
     }
     public void createRows(int rows){
         for(int x = 0 ;x< rows; x++){
             TableRow tempRow = new TableRow(this);
             ids[x][0]=tempRow.getId();
-            for(int y = 1; y<6;y++){
+            for(int y = 0; y<5;y++){
                 ImageView temp = new ImageView(this);
                 temp.setImageResource(R.drawable.dirt_tile);
                 tempRow.addView(temp);
@@ -116,9 +113,10 @@ public class FullscreenActivity extends AppCompatActivity {
 
         imageMove();
         //player = new Player(R.id.drill, this);
-        for (int i = 0; i < ids.length; i++) {
-            for(int j = 1; j < ids[i].length; j++) {
-                Block block = new Block(ids[i][j], this,1);
+        for (int i = 0; i < level + 5; i++) {
+            for(int j = 1; j < 5; j++) {
+                Log.i("test",""+ ids[i][j]);
+                Block block = new Block(    ids[i][j], this,1);
                 player.update();
                 block.update();
 
