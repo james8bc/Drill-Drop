@@ -3,19 +3,20 @@ package creek.student.finalproject;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity {
+    RelativeLayout rl;
     private int speed;
     private GameThread thready;
     private ImageView test;
     //private ImageView[][]blocks;
     private Block[][] blocks;
     private ImageView[][] borders;
-    RelativeLayout rl;
     private Player drill;
     private int bordNum;
 
@@ -74,9 +75,12 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void createBlocks() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int width = displayMetrics.widthPixels;
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
-                blocks[x][y] = new Block(y, x, new ImageView(this));
+                blocks[x][y] = new Block(y, x, width, new ImageView(this));
                 //blocks[x][y].setImage(new ImageView(this));
                 //blocks[x][y].getImage().setImageResource(R.drawable.dirt_tile);
                 rl.addView(blocks[x][y].getImage());
