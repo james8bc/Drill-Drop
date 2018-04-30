@@ -1,54 +1,79 @@
 package creek.student.finalproject;
 
 
-import android.app.Activity;
 import android.graphics.Rect;
 import android.util.Log;
 import android.widget.ImageView;
 
+public class Player {
+    private ImageView img;
 
-public class Player extends Item {
-    private final Activity activity;
-    private int xPos;
-    private int yPos;
-    private boolean isAlive;
-    private int lives;
-    private int Id;
-    private int score;//todo implement scoring while going down and have each blocktype return the correct score going up
-    private Image image;
-    public Player(int id, Activity _activity){
-        this.activity = _activity;
-        Id = id;
-        image = new Image(id, this.activity);
-        xPos = (int)image.getImageView().getX();
-        yPos = (int)image.getImageView().getY();
-        super.setup(id, _activity);
+    public int getX() {
+        return x;
     }
 
+    public int getY() {
+        return y;
+    }
 
-    public void kill(){
-        FullscreenActivity.changeGoingUp();
+    public int getSpeed() {
+        return speed;
     }
-    public Image getImage(){
-        return image;
+
+    private int x;
+    private int y;
+    private int speed;
+    private Rect hitBox;
+    private int frame;
+    private Block[][] blocks;
+
+    public Player(ImageView imm, Block[][] blockz) {
+        img = imm;
+        hitBox = new Rect();
+        img.getDrawingRect(hitBox);
+        frame = 0;
+        blocks = blockz;
     }
-    public void hit(){
-        lives--;
-        if(lives==0){
-            kill();
+
+    public void updatePlayer() {
+        img.setX(x);
+        img.setY(y);
+    }
+
+    public void nextFrame() {
+        if (frame == 0) {
+            img.setImageResource(R.drawable.drill_tile);
+        }
+        if (frame == 1) {
+            img.setImageResource(R.drawable.drill_tile2);
+        }
+        if (frame == 2) {
+            img.setImageResource(R.drawable.drill_tile3);
+        }
+        if (frame == 3) {
+            img.setImageResource(R.drawable.drill_tile4);
+        }
+        if (frame == 4) {
+            img.setImageResource(R.drawable.drill_tile5);
+            frame = -1;
+        }
+        frame++;
+    }
+
+    public void checkHit() {
+        for (int x = 0; x < blocks.length; x++) {
+            for (int y = 0; y < blocks[x].length; y++) {
+                if (Rect.intersects(hitBox, blocks[x][y].getHitBox())) {
+                    Log.i("hit", "hit!");
+                }
+            }
         }
 
     }
 
-    void update(){
-        image = new Image(Id, this.activity);
-        xPos = (int)image.getImageView().getX();
-        yPos = (int)image.getImageView().getY();
-    }
-    public int getLives(){
-        return lives;
-    }
-    public boolean intersected(Block b){ //todo hitboxes working properly
+
+
+  /*  public boolean intersected(Block b){ //todo hitboxes working properly
         //rect = new Rect(x, y, x+sprite.getWidth(), y+sprite.getHeight());
         Rect r1 = new Rect();
         Rect r2 = new Rect();
@@ -74,6 +99,6 @@ public class Player extends Item {
         //Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
 
         return r1.intersect(r2);
-    }
+    }*/
 
 }

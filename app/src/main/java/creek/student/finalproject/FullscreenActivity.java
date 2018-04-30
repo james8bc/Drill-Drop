@@ -1,4 +1,4 @@
-package creek.student.finalproject;
+/*package creek.student.finalproject;
 
 import android.annotation.SuppressLint;
 import android.graphics.PointF;
@@ -228,4 +228,4 @@ public class FullscreenActivity extends AppCompatActivity {
 
         });
     }
-}
+}*/

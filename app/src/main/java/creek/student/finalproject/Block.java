@@ -1,52 +1,70 @@
 package creek.student.finalproject;
 
-import android.app.Activity;
-import android.content.ClipData;
-import android.view.View;
+import android.graphics.Rect;
 import android.widget.ImageView;
 
-public class Block extends Item {
-    private final Activity activity;
-    private int xPos;
-    private int yPos;
-    private boolean isHit;
-    private ImageView view;
-    private BlockType blockType;//todo assign each number of type to the correct blocktype
-    private int imageId;
-    private Image image;
-    public Block(int id, Activity _activity,int type){
-        this.activity = _activity;
-        imageId = id;
-        blockType = new BlockType(imageId, this.activity);
-        image = new Image(id, this.activity);
-        xPos = (int)image.getImageView().getX();
-        yPos = (int)image.getImageView().getY();
-        super.setup(id, _activity);
-    }
-    public boolean isHit(){
-        return isHit == true;
-    }
-    void update(){
-        image = new Image(imageId, this.activity);
-        xPos = (int)image.getImageView().getX();
-        yPos = (int)image.getImageView().getY();
-    }
-    void hit() {
-        //if (FullscreenActivity.isGoingUp()) {
-            isHit=true;
-            image.getImageView().setVisibility(ImageView.GONE);
-        //}
-        //else{
-        //    imageId = imageId;
-            //player.hit
-        //}
-    }   public int getPosX(){
-        return xPos;
-    }public int getPosY(){
-        return yPos;
-    }
-    public Image getImage(){
-        return blockType.getImage();
+
+public class Block {
+
+
+    private int x;
+    private int y;
+    private ImageView img;
+    private Rect hitBox;
+
+    public Block(int xPos, int yPos, ImageView imm) {
+        img = imm;
+        img.setImageResource(R.drawable.dirt_tile);
+        int num = (int) (Math.random() * 100);
+        //determines what type of block is to be initialized
+        if (yPos % 2 != 0)
+            if (num < 50) {
+                img.setImageResource(R.drawable.ore1_tile);
+                num = (int) (Math.random() * 100);
+                if (num < 50) {
+                    img.setImageResource(R.drawable.ore2_tile);
+                    num = (int) (Math.random() * 100);
+                    if (num < 50) {
+                        img.setImageResource(R.drawable.ore3_tile);
+                    }
+                }
+            }
+        x = 400 * xPos - 50;
+        y = 400 * yPos;
+        hitBox = new Rect();
+        img.getDrawingRect(hitBox);
     }
 
+    public void setImage(ImageView thiss) {
+        img = thiss;
+    }
+
+    public ImageView getImage() {
+        return img;
+    }
+
+    public Rect getHitBox() {
+        return hitBox;
+    }
+
+    public void update() {
+        img.setX(x);
+        img.setY(y);
+    }
+
+    public void setX(int xx) {
+        x = xx;
+    }
+
+    public void setY(int xx) {
+        y = xx;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
 }
