@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Block[][] blocks;
     private ImageView[][] borders;
     private Player drill;
+    private int width;
     private int bordNum;
 
     @Override
@@ -33,6 +34,9 @@ public class MainActivity extends AppCompatActivity {
         test.setScaleX(test.getScaleX() * 2);
         test.setScaleY(test.getScaleY() * 2);
 
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        width = displayMetrics.widthPixels;
 //        ImageView yuh = new ImageView(this);
 //        yuh.setImageResource(R.drawable.ic_launcher_foreground);
         rl = findViewById(R.id.constraintz);
@@ -67,7 +71,11 @@ public class MainActivity extends AppCompatActivity {
         //Log.i("tag","workinggg");
         moveBlocks();
 
-
+        for (Block[] b : blocks) {
+            for (Block bl : b) {
+                drill.intersected(bl);
+            }
+        }
         drill.nextFrame();
         drill.checkHit();
         //checkHit();
@@ -75,12 +83,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void createBlocks() {
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
-        int width = displayMetrics.widthPixels;
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
-                blocks[x][y] = new Block(y, x, width, new ImageView(this));
+                blocks[x][y] = new Block(y, x, width, new ImageView(this), this);
                 //blocks[x][y].setImage(new ImageView(this));
                 //blocks[x][y].getImage().setImageResource(R.drawable.dirt_tile);
                 rl.addView(blocks[x][y].getImage());
@@ -101,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                     borders[x][y].setX(0);
                 } else {
                     borders[x][y].setImageResource(R.drawable.dirt_border2);
-                    borders[x][y].setX(1050);
+                    borders[x][y].setX(width / 4 * 3);
 
                 }
                 borders[x][y].setY(400 * x);

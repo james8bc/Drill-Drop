@@ -12,6 +12,21 @@ public class GameThread extends Thread {
     int num;
     MainActivity useClass;
     Block[][] blocksArr;
+    Runnable mStatusChecker = new Runnable() {
+        @Override
+        public void run() {//todo get correct speed for screen scrolling
+            try {
+                useClass.update();
+            } finally {
+
+
+                //num++;
+                //c.setX(num);
+                handle.postDelayed(mStatusChecker, 1);
+            }
+        }
+    };
+    private boolean paused;
 
     public GameThread(MainActivity act) {
         handle = new Handler();
@@ -26,22 +41,5 @@ public class GameThread extends Thread {
         run();
         num = 0;
     }
-
-    private boolean paused;
-
-    Runnable mStatusChecker = new Runnable() {
-        @Override
-        public void run() {//todo get correct speed for screen scrolling
-            try {
-                useClass.update();
-            } finally {
-
-
-                //num++;
-                //c.setX(num);
-                handle.postDelayed(mStatusChecker, 45);
-            }
-        }
-    };
 
 }

@@ -1,21 +1,25 @@
 package creek.student.finalproject;
 
+import android.app.Activity;
 import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
-public class Block {
+public class Block extends Item {
 
 
+    private final Activity activity;
     private int x;
     private int y;
     private int width;
     private ImageView img;
     private Rect hitBox;
+    private boolean isHit;
 
-    public Block(int xPos, int yPos, int w, ImageView imm) {
+    public Block(int xPos, int yPos, int w, ImageView imm, Activity activity) {
         img = imm;
+        this.activity = activity;
         img.setImageResource(R.drawable.dirt_tile);
         int num = (int) (Math.random() * 100);
         //determines what type of block is to be initialized
@@ -42,8 +46,24 @@ public class Block {
         return img;
     }
 
-    public void setImage(ImageView thiss) {
-        img = thiss;
+    public void setImage(ImageView image) {
+        img = image;
+    }
+
+    int getX() {
+        return x;
+    }
+
+    void setX(int xx) {
+        x = xx;
+    }
+
+    int getY() {
+        return y;
+    }
+
+    void setY(int xx) {
+        y = xx;
     }
 
     public Rect getHitBox() {
@@ -60,19 +80,12 @@ public class Block {
         img.setLayoutParams(params);
     }
 
-    public int getX() {
-        return x;
+    public void hit() {
+        isHit = true;
+        img.setImageResource(R.drawable.dirt_tile);
     }
 
-    public void setX(int xx) {
-        x = xx;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public void setY(int xx) {
-        y = xx;
+    public boolean isHit() {
+        return isHit;
     }
 }

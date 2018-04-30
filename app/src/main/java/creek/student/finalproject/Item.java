@@ -4,8 +4,8 @@ import android.app.Activity;
 import android.widget.ImageView;
 
 public abstract class Item {
-    //private int xPos;
-    //private int yPos;
+    private int x;
+    private int y;
     private Image image;
     private int idImageView;
 
@@ -18,9 +18,12 @@ public abstract class Item {
 
    abstract void hit();
 
-   /*int getPosX(){
-       return xPos;
-   }int getPosY(){
-       return yPos;
-    }*/
+    int getX() {
+        return x;
+    }
+
+    int getY() {
+        return y;
+    }
+
 }

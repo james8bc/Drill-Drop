@@ -5,34 +5,24 @@ import android.graphics.Rect;
 import android.util.Log;
 import android.widget.ImageView;
 
-public class Player {
+public class Player extends Item {
     private ImageView img;
-
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public int getSpeed() {
-        return speed;
-    }
-
     private int x;
     private int y;
     private int speed;
     private Rect hitBox;
     private int frame;
     private Block[][] blocks;
-
     public Player(ImageView imm, Block[][] blockz) {
         img = imm;
         hitBox = new Rect();
         img.getDrawingRect(hitBox);
         frame = 0;
         blocks = blockz;
+    }
+
+    public int getSpeed() {
+        return speed;
     }
 
     public void updatePlayer() {
@@ -71,9 +61,11 @@ public class Player {
 
     }
 
+    public void hit() {
 
+    }
 
-  /*  public boolean intersected(Block b){ //todo hitboxes working properly
+    public boolean intersected(Block b) { //todo hitboxes working properly
         //rect = new Rect(x, y, x+sprite.getWidth(), y+sprite.getHeight());
         Rect r1 = new Rect();
         Rect r2 = new Rect();
@@ -87,18 +79,18 @@ public class Player {
             return false;
         }
         b.update();
-        b.getImage().getImageView().getGlobalVisibleRect(r1);
-        image.getImageView().getGlobalVisibleRect(r2);
+        b.getImage().getGlobalVisibleRect(r1);
+        img.getGlobalVisibleRect(r2);
 
         //Log.e("YSIZEBLOCK", b.getImage().getySize() + "");
         //Log.e("YSIZEDRILL", image.getySize() + "");
-        Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
-        Log.e("YXXXXXXPOSBLOCK", "" + b.getPosX());
+        //Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
+        //Log.e("YXXXXXXPOSBLOCK", "" + b.getX());
         //Log.e("YPOSDRILL", yPos   + "");
         //Rect r1 = new Rect(b.getPosX(), b.getPosY(), b.getPosX() + b.getImage().getySize(),b.getPosY() + b.getImage().getySize());
         //Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
 
         return r1.intersect(r2);
-    }*/
+    }
 
 }
