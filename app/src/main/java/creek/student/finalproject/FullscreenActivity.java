@@ -155,6 +155,7 @@ public class FullscreenActivity extends AppCompatActivity {
             else
                 constraintSet.connect(row, ConstraintSet.TOP, row - 1, ConstraintSet.TOP, margin);
         }
+
         constraintSet.applyTo(constraintLayout);
     }
 
