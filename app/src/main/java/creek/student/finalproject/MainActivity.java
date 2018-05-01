@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,13 +13,12 @@ public class MainActivity extends AppCompatActivity {
     private int speed;
     private GameThread thready;
     private ImageView test;
-    //private ImageView[][]blocks;
     private Block[][] blocks;
     private ImageView[][] borders;
     private Player drill;
     private int width;
     private int height;
-    private int bordNum;
+    private boolean goingDown;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,18 +27,15 @@ public class MainActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
         setContentView(R.layout.activity_main);
-        bordNum = 0;
         test = findViewById(R.id.drill);
         test.setImageResource(R.drawable.drill_tile);
         test.setScaleX(test.getScaleX() * 2);
         test.setScaleY(test.getScaleY() * 2);
-
+        goingDown = true;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
         height = displayMetrics.heightPixels;
-//        ImageView yuh = new ImageView(this);
-//        yuh.setImageResource(R.drawable.ic_launcher_foreground);
         rl = findViewById(R.id.constraintz);
         blocks = new Block[200][4];
         borders = new ImageView[10][2];
@@ -48,13 +43,7 @@ public class MainActivity extends AppCompatActivity {
         createBorder();
         drill = new Player(test, blocks);
         thready = new GameThread(this);
-
         thready.mStatusChecker.run();
-//        ImageView ye = new ImageView(this);
-//        ye.setImageResource(R.drawable.dirt_tile);
-//        rl.addView(ye);
-//        ye.setX(1000);
-
         speed = -50;
 
 
@@ -64,15 +53,14 @@ public class MainActivity extends AppCompatActivity {
         float x = event.getX();
         float y = event.getY();
         test.setX(x - 150);
-        Log.i("thing", "" + test.getX());
-        Log.i("dfh", "srgh");
         return true;
     }
 
     public void update() {
-        Log.i("tag", blocks[0] + "");
         moveBlocks();
-
+        if (goingDown == false) {
+            speed = 50;
+        }
         for (Block[] b : blocks) {
             for (Block bl : b) {
                 if (bl.getY() > 0 && bl.getY() < height)
@@ -81,9 +69,6 @@ public class MainActivity extends AppCompatActivity {
                     }
             }
         }
-        //drill.nextFrame();
-        //drill.checkHit();
-        //checkHit();
     }
 
 
@@ -91,15 +76,11 @@ public class MainActivity extends AppCompatActivity {
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
                 blocks[x][y] = new Block(y, x, width, new ImageView(this), this);
-                //blocks[x][y].setImage(new ImageView(this));
-                //blocks[x][y].getImage().setImageResource(R.drawable.dirt_tile);
                 rl.addView(blocks[x][y].getImage());
                 blocks[x][y].update();
                 blocks[x][y].setSize();
-                Log.i("block", x + " " + y);
             }
         }
-
         rl.removeView(test);
         rl.addView(test);
     }
@@ -116,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                     borders[x][y].setX(width / 4 * 3);
 
                 }
-                borders[x][y].setY(400 * x);
+                borders[x][y].setY(width / 4 * y);
                 rl.addView(borders[x][y]);
             }
         }
@@ -130,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].setY(blocks[x][y].getY() + speed);
                 blocks[x][y].update();
             }
+        }
+        if (blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true) {
+            goingDown = false;
         }
     }
 
