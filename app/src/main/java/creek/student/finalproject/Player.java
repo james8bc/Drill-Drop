@@ -1,35 +1,33 @@
 package creek.student.finalproject;
 
 
+import android.app.Activity;
 import android.graphics.Rect;
-import android.util.Log;
 import android.widget.ImageView;
 
 public class Player extends Item {
     private ImageView img;
-    private int x;
-    private int y;
-    private int speed;
     private ImageView hitBox;
-    private int frame;
+    private int frame = 0;
     private Block[][] blocks;
 
-    public Player(ImageView img, ImageView box, Block[][] blockz) {
-        img = img;
+    public Player(ImageView image, ImageView box, Block[][] b, int width, Activity activity) {
+        super.setup(image, activity, (int) image.getX(), (int) image.getY(), width);
+        img = image;
         hitBox = box;
-        frame = 0;
-        blocks = blockz;
+        blocks = b;
+        image.setImageResource(R.drawable.drill_tile);
+        image.setScaleX(image.getScaleX() * 2);
+        image.setScaleY(image.getScaleY() * 2);
     }
 
-    public int getSpeed() {
-        return speed;
-    }
-
-    public void updatePlayer() {
-        img.setX(x);
-        img.setY(y);
-        hitBox.setX(x);
-        hitBox.setY(y);
+    @Override
+    public void update() {
+        img.setX(getX());
+        //img.setY(getY());
+        hitBox.setX(getX());
+        // + (img.getWidth()) / 2 - hitBox.getWidth());
+        //hitBox.setY(getY());
     }
 
     public void nextFrame() {
@@ -51,16 +49,20 @@ public class Player extends Item {
         }
         frame++;
     }
+
     public void hit() {
 
     }
 
-    public boolean intersected(Block b) { //todo hitboxes working properly
+    public boolean intersected(Block b) {
+        if (b.isHit() == true) {
+            return false;
+
+        }
         Rect r1 = new Rect();
         Rect r2 = new Rect();
         b.update();
         b.getImage().getGlobalVisibleRect(r1);
-        img.getGlobalVisibleRect(r2);
         hitBox.getGlobalVisibleRect(r2);
         return r1.intersect(r2);
     }

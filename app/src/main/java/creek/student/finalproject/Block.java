@@ -1,89 +1,45 @@
 package creek.student.finalproject;
 
 import android.app.Activity;
-import android.graphics.Rect;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
 public class Block extends Item {
-
-
-    private final Activity activity;
-    private int x;
-    private int y;
-    private int width;
     private ImageView img;
-    private Rect hitBox;
     private boolean isHit;
 
-    public Block(int xPos, int yPos, int w, ImageView imm, Activity activity) {
-        img = imm;
-        this.activity = activity;
+    public Block(int xPos, int yPos, int width, Activity activity) {
+        super.setup(new ImageView(activity), activity, width / 4 * xPos, width / 4 * yPos, width);
+        img = super.getImage();
         img.setImageResource(R.drawable.dirt_tile);
         int num = (int) (Math.random() * 100);
-        //determines what type of block is to be initialized
-        if (yPos % 2 != 0)
-            if (num < 50) {
+        if (yPos % 2 != 0) {
+            if (num <= 40)
+                img.setImageResource(R.drawable.dirt_tile);
+            if (num <= 60 && num > 40)
                 img.setImageResource(R.drawable.ore1_tile);
-                num = (int) (Math.random() * 100);
-                if (num < 50) {
-                    img.setImageResource(R.drawable.ore2_tile);
-                    num = (int) (Math.random() * 100);
-                    if (num < 50) {
-                        img.setImageResource(R.drawable.ore3_tile);
-                    }
-                }
-            }
-        width = w;
-        x = width / 4 * xPos;
-        y = width / 4 * yPos;
-        hitBox = new Rect();
-        img.getDrawingRect(hitBox);
+            if (num <= 80 && num > 60)
+                img.setImageResource(R.drawable.ore2_tile);
+            if (num <= 100 && num > 80)
+                img.setImageResource(R.drawable.ore3_tile);
+        }
     }
 
-    public ImageView getImage() {
-        return img;
-    }
-
-    public void setImage(ImageView image) {
-        img = image;
-    }
-
-    int getX() {
-        return x;
-    }
-
-    void setX(int xx) {
-        x = xx;
-    }
-
-    int getY() {
-        return y;
-    }
-
-    void setY(int xx) {
-        y = xx;
-    }
-
-    public Rect getHitBox() {
-        return hitBox;
-    }
-
+    @Override
     public void update() {
-        img.setX(x);
-        img.setY(y);
-
-
+        img.setX(getX());
+        img.setY(getY());
     }
 
     public void setSize() {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) img.getLayoutParams();
-        params.width = width / 4;
-        params.height = width / 4;
+        params.width = getWidth() / 4;
+        params.height = getWidth() / 4;
         img.setLayoutParams(params);
     }
 
+    @Override
     public void hit() {
         isHit = true;
         img.setImageResource(R.drawable.dirt_tile);

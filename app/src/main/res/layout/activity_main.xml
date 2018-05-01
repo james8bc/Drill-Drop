@@ -9,20 +9,6 @@
     tools:context=".MainActivity">
 
 
-
-    <ImageView
-        android:id="@+id/drill"
-        android:layout_width="96dp"
-        android:layout_height="96dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="45dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.02"
-        app:srcCompat="@mipmap/ic_launcher"
-        tools:layout_editor_absoluteX="261dp" />
-
     <ImageView
         android:id="@+id/drillBound"
         android:layout_width="wrap_content"
@@ -32,5 +18,38 @@
         android:layout_marginBottom="43dp"
         android:layout_marginEnd="47dp"
         app:srcCompat="@android:drawable/screen_background_light_transparent" />
+
+    <ImageView
+        android:id="@+id/drill"
+        android:layout_width="96dp"
+        android:layout_height="96dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.02"
+        app:srcCompat="@mipmap/ic_launcher"
+        tools:layout_editor_absoluteX="261dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Score: "
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginEnd="18dp"
+        android:text="Lives: "
+        android:textColor="@android:color/background_dark"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
 </android.widget.RelativeLayout>
