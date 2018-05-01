@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
     private int speed;
     private GameThread thready;
-    private ImageView test;
+    private ImageView drillImage;
+    private ImageView hitBox;
     private Block[][] blocks;
     private ImageView[][] borders;
     private Player drill;
@@ -29,10 +30,11 @@ public class MainActivity extends AppCompatActivity {
         actionBar.hide();
         setContentView(R.layout.activity_main);
         bordNum = 0;
-        test = findViewById(R.id.drill);
-        test.setImageResource(R.drawable.drill_tile);
-        test.setScaleX(test.getScaleX() * 2);
-        test.setScaleY(test.getScaleY() * 2);
+        hitBox = findViewById(R.id.drillBound);
+        drillImage = findViewById(R.id.drill);
+        drillImage.setImageResource(R.drawable.drill_tile);
+        drillImage.setScaleX(drillImage.getScaleX() * 2);
+        drillImage.setScaleY(drillImage.getScaleY() * 2);
         goingDown = true;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -43,19 +45,17 @@ public class MainActivity extends AppCompatActivity {
         borders = new ImageView[10][2];
         createBlocks();
         createBorder();
-        drill = new Player(test, blocks);
+        drill = new Player(drillImage, hitBox, blocks);
         thready = new GameThread(this);
 
         thready.mStatusChecker.run();
         speed = -50;
-
-
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        test.setX(x - 150);
+        drillImage.setX(x - 150);
         return true;
     }
 
@@ -66,12 +66,13 @@ public class MainActivity extends AppCompatActivity {
         }
         for (Block[] b : blocks) {
             for (Block bl : b) {
-                drill.intersected(bl);
+
+                if (drill.intersected(bl))
+                    bl.hit();
             }
         }
         drill.nextFrame();
-        drill.checkHit();
-        //checkHit();
+        //drill.checkHit();
     }
 
 
@@ -84,8 +85,8 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].setSize();
             }
         }
-        rl.removeView(test);
-        rl.addView(test);
+        rl.removeView(drillImage);
+        rl.addView(drillImage);
     }
 
     public void createBorder() {
@@ -104,8 +105,8 @@ public class MainActivity extends AppCompatActivity {
                 rl.addView(borders[x][y]);
             }
         }
-        rl.removeView(test);
-        rl.addView(test);
+        rl.removeView(drillImage);
+        rl.addView(drillImage);
     }
 
     public void moveBlocks() {
