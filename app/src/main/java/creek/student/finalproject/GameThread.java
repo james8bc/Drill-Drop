@@ -22,7 +22,7 @@ public class GameThread extends Thread {
 
                 //num++;
                 //c.setX(num);
-                handle.postDelayed(mStatusChecker, 1);
+                handle.postDelayed(mStatusChecker, 35);
             }
         }
     };

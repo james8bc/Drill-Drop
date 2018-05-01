@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView[][] borders;
     private Player drill;
     private int width;
+    private int height;
     private int bordNum;
 
     @Override
@@ -37,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
+        height = displayMetrics.heightPixels;
 //        ImageView yuh = new ImageView(this);
 //        yuh.setImageResource(R.drawable.ic_launcher_foreground);
         rl = findViewById(R.id.constraintz);
@@ -68,16 +70,19 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void update() {
-        //Log.i("tag","workinggg");
+        Log.i("tag", blocks[0] + "");
         moveBlocks();
 
         for (Block[] b : blocks) {
             for (Block bl : b) {
-                drill.intersected(bl);
+                if (bl.getY() > 0 && bl.getY() < height)
+                    if (drill.intersected(bl)) {
+                        bl.hit();
+                    }
             }
         }
-        drill.nextFrame();
-        drill.checkHit();
+        //drill.nextFrame();
+        //drill.checkHit();
         //checkHit();
     }
 

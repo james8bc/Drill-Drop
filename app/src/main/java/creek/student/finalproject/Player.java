@@ -82,15 +82,15 @@ public class Player extends Item {
         b.getImage().getGlobalVisibleRect(r1);
         img.getGlobalVisibleRect(r2);
 
-        //Log.e("YSIZEBLOCK", b.getImage().getySize() + "");
-        //Log.e("YSIZEDRILL", image.getySize() + "");
-        //Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
-        //Log.e("YXXXXXXPOSBLOCK", "" + b.getX());
-        //Log.e("YPOSDRILL", yPos   + "");
+        /*Log.e("YSIZEBLOCK", b.getImage().getHeight() + "");
+        Log.e("YSIZEDRILL", img.getHeight() + "");
+        Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
+        Log.e("YXXXXXXPOSBLOCK", "" + b.getX());
+        Log.e("YPOSDRILL", String.valueOf(r1.top)   + "");*/
         //Rect r1 = new Rect(b.getPosX(), b.getPosY(), b.getPosX() + b.getImage().getySize(),b.getPosY() + b.getImage().getySize());
         //Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
 
-        return r1.intersect(r2);
+        return r2.intersect(r1);
     }
 
 }
