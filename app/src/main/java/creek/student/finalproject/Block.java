@@ -74,6 +74,10 @@ public class Block extends Item {
         img.setX(x);
         img.setY(y);
 
+
+    }
+
+    public void setSize() {
         RelativeLayout.LayoutParams params = (RelativeLayout.LayoutParams) img.getLayoutParams();
         params.width = width / 4;
         params.height = width / 4;

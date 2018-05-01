@@ -90,9 +90,11 @@ public class MainActivity extends AppCompatActivity {
                 //blocks[x][y].getImage().setImageResource(R.drawable.dirt_tile);
                 rl.addView(blocks[x][y].getImage());
                 blocks[x][y].update();
+                blocks[x][y].setSize();
                 Log.i("block", x + " " + y);
             }
         }
+
         rl.removeView(test);
         rl.addView(test);
     }
