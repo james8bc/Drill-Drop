@@ -12,7 +12,8 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
     private int speed;
     private GameThread thready;
-    private ImageView test;
+    private ImageView drillImage;
+    private ImageView hitBox;
     private Block[][] blocks;
     private ImageView[][] borders;
     private Player drill;
@@ -27,10 +28,11 @@ public class MainActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.hide();
         setContentView(R.layout.activity_main);
-        test = findViewById(R.id.drill);
-        test.setImageResource(R.drawable.drill_tile);
-        test.setScaleX(test.getScaleX() * 2);
-        test.setScaleY(test.getScaleY() * 2);
+        hitBox = findViewById(R.id.drillBound);
+        drillImage = findViewById(R.id.drill);
+        drillImage.setImageResource(R.drawable.drill_tile);
+        drillImage.setScaleX(drillImage.getScaleX() * 2);
+        drillImage.setScaleY(drillImage.getScaleY() * 2);
         goingDown = true;
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
@@ -41,18 +43,16 @@ public class MainActivity extends AppCompatActivity {
         borders = new ImageView[10][2];
         createBlocks();
         createBorder();
-        drill = new Player(test, blocks);
+        drill = new Player(drillImage, hitBox, blocks);
         thready = new GameThread(this);
         thready.mStatusChecker.run();
         speed = -50;
-
-
     }
 
     public boolean onTouchEvent(MotionEvent event) {
         float x = event.getX();
         float y = event.getY();
-        test.setX(x - 150);
+        drillImage.setX(x - 150);
         return true;
     }
 
@@ -61,14 +61,12 @@ public class MainActivity extends AppCompatActivity {
         if (goingDown == false) {
             speed = 50;
         }
-        for (Block[] b : blocks) {
-            for (Block bl : b) {
-                if (bl.getY() > 0 && bl.getY() < height)
-                    if (drill.intersected(bl)) {
+        for (Block[] b : blocks)
+            for (Block bl : b)
+                if (bl.getY() > 0 && bl.getY() < height && !bl.isHit())
+                    if (drill.intersected(bl))
                         bl.hit();
-                    }
-            }
-        }
+        drill.nextFrame();
     }
 
 
@@ -81,8 +79,8 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].setSize();
             }
         }
-        rl.removeView(test);
-        rl.addView(test);
+        rl.removeView(drillImage);
+        rl.addView(drillImage);
     }
 
     public void createBorder() {
@@ -101,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
                 rl.addView(borders[x][y]);
             }
         }
-        rl.removeView(test);
-        rl.addView(test);
+        rl.removeView(drillImage);
+        rl.addView(drillImage);
     }
 
     public void moveBlocks() {

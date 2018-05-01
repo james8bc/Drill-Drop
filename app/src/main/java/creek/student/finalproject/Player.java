@@ -10,13 +10,13 @@ public class Player extends Item {
     private int x;
     private int y;
     private int speed;
-    private Rect hitBox;
+    private ImageView hitBox;
     private int frame;
     private Block[][] blocks;
-    public Player(ImageView imm, Block[][] blockz) {
-        img = imm;
-        hitBox = new Rect();
-        img.getDrawingRect(hitBox);
+
+    public Player(ImageView img, ImageView box, Block[][] blockz) {
+        img = img;
+        hitBox = box;
         frame = 0;
         blocks = blockz;
     }
@@ -28,6 +28,8 @@ public class Player extends Item {
     public void updatePlayer() {
         img.setX(x);
         img.setY(y);
+        hitBox.setX(x);
+        hitBox.setY(y);
     }
 
     public void nextFrame() {
@@ -49,48 +51,18 @@ public class Player extends Item {
         }
         frame++;
     }
-
-    public void checkHit() {
-        for (int x = 0; x < blocks.length; x++) {
-            for (int y = 0; y < blocks[x].length; y++) {
-                if (Rect.intersects(hitBox, blocks[x][y].getHitBox())) {
-                    Log.i("hit", "hit!");
-                }
-            }
-        }
-
-    }
-
     public void hit() {
 
     }
 
     public boolean intersected(Block b) { //todo hitboxes working properly
-        //rect = new Rect(x, y, x+sprite.getWidth(), y+sprite.getHeight());
         Rect r1 = new Rect();
         Rect r2 = new Rect();
-        //image.getImageView().getDrawingRect(rc1);
-        //b.getImage().getDrawingRect(rc2);
-        //if (Rect.intersects(rc1, rc2)) {
-            // intersection is detected
-            // here is your method call
-       // }
-        if(b.isHit()){
-            return false;
-        }
         b.update();
         b.getImage().getGlobalVisibleRect(r1);
         img.getGlobalVisibleRect(r2);
-
-        /*Log.e("YSIZEBLOCK", b.getImage().getHeight() + "");
-        Log.e("YSIZEDRILL", img.getHeight() + "");
-        Log.e("YPOSBLOCK", "" + String.valueOf(r1.top));
-        Log.e("YXXXXXXPOSBLOCK", "" + b.getX());
-        Log.e("YPOSDRILL", String.valueOf(r1.top)   + "");*/
-        //Rect r1 = new Rect(b.getPosX(), b.getPosY(), b.getPosX() + b.getImage().getySize(),b.getPosY() + b.getImage().getySize());
-        //Rect r2 = new Rect(xPos, yPos,xPos+image.getxSize(),yPos+image.getySize());
-
-        return r2.intersect(r1);
+        hitBox.getGlobalVisibleRect(r2);
+        return r1.intersect(r2);
     }
 
 }
