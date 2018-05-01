@@ -3,6 +3,9 @@ package creek.student.finalproject;
 import android.app.Activity;
 import android.widget.ImageView;
 
+//Todo add comments
+//Everything else should be good
+
 public abstract class Item {
     private int x;
     private int y;
@@ -17,7 +20,6 @@ public abstract class Item {
     }
 
     abstract void hit();
-
     abstract void update();
 
     int getWidth() {
@@ -33,13 +35,11 @@ public abstract class Item {
 
     void setXPos(int xPos) {
         x = xPos;
-        //img.setX((float)x);
     }
 
 
     void setYPos(int yPos) {
         y = yPos;
-        //img.setY((float)y);
     }
 
     ImageView getImage() {

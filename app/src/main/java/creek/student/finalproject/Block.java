@@ -6,6 +6,11 @@ import android.widget.RelativeLayout;
 
 
 public class Block extends Item {
+
+    //Todo make sure not 4 blocks in one row
+    //Todo add comments
+    //Everything else should be good
+
     private ImageView img;
     private boolean isHit;
 

@@ -5,6 +5,9 @@ package creek.student.finalproject; /**
 import android.os.Handler;
 import android.widget.ImageView;
 
+//Todo pause button
+//Todo add comments
+//Everything else should be good
 
 public class GameThread extends Thread {
     Handler handle;
@@ -18,14 +21,11 @@ public class GameThread extends Thread {
             try {
                 useClass.update();
             } finally {
-
-
-                //num++;
-                //c.setX(num);
                 handle.postDelayed(mStatusChecker, 35);
             }
         }
     };
+
     private boolean paused;
 
     public GameThread(MainActivity act) {

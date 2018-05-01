@@ -9,6 +9,12 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+//Todo add comments
+//Todo game over screen when lives == 0 or end of screen (maybe like if all blocks y position is less than 0)
+//Todo fix lives and score text to be on top
+//Todo create pause button
+//Everything else should be good
+
 public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
     private int speed = -50;
