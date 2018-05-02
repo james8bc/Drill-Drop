@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -14,9 +15,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-//Todo add comments on every activity
-//Todo create pause button
 
 public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
@@ -39,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     private boolean goingDown = true;
     private int trailCount = 200;
     private boolean paused = false;
+    private int touchX;
+    private int touchY;
+    private int drillSpeed = 100;
+    private int rAcc = 1;
+    private int lAcc = 1;
 //initializes most variables and creates the gamethread.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +54,8 @@ public class MainActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
         height = displayMetrics.heightPixels;
+        speed = -width/36;
+        Log.i("ye","height: "+height);
         rl = findViewById(R.id.constraintz);
         setup();
         thread = new GameThread(this);
@@ -59,8 +64,12 @@ public class MainActivity extends AppCompatActivity {
 //controls x value of drill.
     public boolean onTouchEvent(MotionEvent event) {
         if(!paused) {
-            drill.setXPos((int) event.getX());
-            drill.update();
+            touchX = (int)event.getX();
+            touchY = (int)event.getY();
+
+
+
+
         }
         return true;
     }
@@ -68,10 +77,20 @@ public class MainActivity extends AppCompatActivity {
     public void update() {
         if (!paused) {
             moveBlocks();
+            if(Math.abs(touchX-drill.getX())>100){
+                if(touchX<drill.getX())
+                    drill.setXPos(drill.getX()-100);
+                if(touchX>drill.getX())
+                    drill.setXPos(drill.getX()+100);
+            }else{
+                drill.setXPos(touchX);
+            }
+            drill.update();
             depthView.setText("Depth: " + ((-blocks[0][0].getY())+320));
             if (goingDown == false)
                 speed = 40;
             }
+
             if (lives == 0)
                 goingDown = false;
             for (Block[] b : blocks)
@@ -158,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         trail.remove(0);
         for (int x = 0; x < trail.size(); x++) {
             trail.get(x).setY(trail.get(x).getY() + speed);
-            if (trail.size() > 30)
+            if (trail.size() > trailCount)
                 trail.remove(0);
         }
         if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true)||lives<1) {
@@ -185,6 +204,7 @@ public class MainActivity extends AppCompatActivity {
         notif.setText("GAME OVER!");
         rl.removeView(notif);
         rl.addView(notif);
+        rl.removeView(restart);
         rl.addView(restart);
 
     }

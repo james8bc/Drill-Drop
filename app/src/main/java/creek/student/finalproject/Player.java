@@ -25,6 +25,7 @@ public class Player extends Item {
 //updates the coordiinates of the drill.
     @Override
     public void update() {
+
         img.setX(getX() - img.getWidth() / 2);
         img.setY(getY());
         hitBox.setX(getX());
