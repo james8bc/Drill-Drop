@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 //Todo add comments
 //Todo game over screen when lives == 0 or end of screen (maybe like if all blocks y position is less than 0)
 //Todo fix lives and score text to be on top
@@ -17,10 +19,11 @@ import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
-    private int speed = -50;
+    private int speed = -40;
     private GameThread thread;
     private Block[][] blocks = new Block[200][4];
-    private ImageView[][] borders = new ImageView[10][2];
+    private ImageView[][] borders = new ImageView[8][2];
+    private ArrayList<ImageView> trail = new ArrayList<ImageView>();
     private Player drill;
     private int width;
     private int height;
@@ -29,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView scoreView;
     private TextView livesView;
     private boolean goingDown = true;
+    private int trailCount = 50;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,15 +61,15 @@ public class MainActivity extends AppCompatActivity {
     public void update() {
         moveBlocks();
         if (goingDown == false)
-            speed = 50;
+            speed = 40;
         for (Block[] b : blocks)
             for (Block bl : b)
                 if (bl.getY() > 0 && bl.getY() < height)
                     if (drill.intersected(bl)) {
                         bl.hit();
-                        score++;
+                        score+=bl.getPoints();
                         ((TextView) findViewById(R.id.textView)).setText("Score: " + score);
-                        if (goingDown) {
+                        if (goingDown&&bl.getType()>0) {
                             lives--;
                             ((TextView) findViewById(R.id.textView2)).setText("Lives: " + lives);
                         }
@@ -75,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void setup() {
         drill = new Player((ImageView) findViewById(R.id.drill), (ImageView) findViewById(R.id.drillBound), blocks, width, this);
+        drill.setYPos(300);
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
                 blocks[x][y] = new Block(y, x, width, this);
@@ -82,6 +87,14 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].update();
                 blocks[x][y].setSize();
             }
+        }
+        for(int x =0;x< trailCount;x++){
+            ImageView tr = new ImageView(this);
+            tr.setImageResource(R.drawable.drill_trail2);
+            tr.setX((int)(drill.getX()-drill.getWidth()/9));
+            tr.setY((int)(drill.getY()+drill.getHeight()*0.5));
+            rl.addView(tr);
+            trail.add(tr);
         }
         rl.removeView(drill.getImage());
         rl.addView(drill.getImage());
@@ -115,8 +128,21 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].update();
             }
         }
+        trail.get(0).setX((int)(drill.getX()-drill.getWidth()/9));
+        trail.get(0).setY((int)(drill.getY()+drill.getHeight()*0.5));
+        trail.add(trail.size(),trail.get(0));
+        trail.remove(0);
+        for(int x = 0;x<trail.size();x++){
+            trail.get(x).setY(trail.get(x).getY()+speed);
+            if(trail.size()>30)
+                trail.remove(0);
+        }
         if (blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true)
             goingDown = false;
+    }
+
+    public void layer(){
+
     }
 
 }

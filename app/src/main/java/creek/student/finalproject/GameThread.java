@@ -21,7 +21,7 @@ public class GameThread extends Thread {
             try {
                 useClass.update();
             } finally {
-                handle.postDelayed(mStatusChecker, 35);
+                handle.postDelayed(mStatusChecker, 10);
             }
         }
     };

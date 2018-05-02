@@ -16,6 +16,7 @@ public class Player extends Item {
     private ImageView img;
     private ImageView hitBox;
     private int frame = 0;
+
     private Block[][] blocks;
 
     public Player(ImageView image, ImageView box, Block[][] b, int width, Activity activity) {
@@ -31,8 +32,9 @@ public class Player extends Item {
     @Override
     public void update() {
         img.setX(getX()-img.getWidth()/2);
+        img.setY(getY());
         hitBox.setX(getX());
-        hitBox.setY(img.getY()+img.getHeight()/2);
+        hitBox.setY((int)(img.getY()+img.getHeight()*0.9));
     }
 
     public void nextFrame() {
@@ -66,4 +68,7 @@ public class Player extends Item {
         return r1.intersect(r2);
     }
 
+    public int getHeight() {
+        return img.getHeight();
+    }
 }

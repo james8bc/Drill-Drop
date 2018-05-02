@@ -7,22 +7,12 @@ import android.graphics.Color;
 //Todo add comments
 //Everything else should be good
 
-public class BlockType {
-    private String name;
-    private Color color;
-    private int pointsGained;
+public interface BlockType {
+    int type = 0;
+    int points = 0;
 
-    public BlockType(int id, Activity _activity) {
-
-    }
-
-    public int getPoitnsGained(){
-        return pointsGained;
-    }
-    public String getName(){
-        return name;
-    }
-    public Color getColor(){
-        return color;
-    }
+    public int getType();
+    public int getPoints();
+    public void setType(int id);
+    public void setPoints(int id);
 }
