@@ -11,11 +11,8 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-//Todo add comments
-//Todo game over screen when lives == 0 or end of screen (maybe like if all blocks y position is less than 0)
-//Todo fix lives and score text to be on top
+//Todo add comments on every activity
 //Todo create pause button
-//Everything else should be good
 
 public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
@@ -49,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         width = displayMetrics.widthPixels;
         height = displayMetrics.heightPixels;
         rl = findViewById(R.id.constraintz);
-
-
         setup();
         thread = new GameThread(this);
         thread.mStatusChecker.run();
@@ -63,12 +58,17 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void update() {
-
-        if(!paused) {
+        if (!paused) {
             moveBlocks();
-            depthView.setText("Depth: " + ((-blocks[0][0].getY())-40));
-            if (goingDown == false)
+            depthView.setText("Depth: " + ((-blocks[0][0].getY()) - 40));
+            if (goingDown == false) {
                 speed = 40;
+                drill.getImage().setRotation(180);
+                drill.setYPos(height - drill.getHeight() - 400);
+                drill.update();
+            }
+            if (lives == 0)
+                goingDown = false;
             for (Block[] b : blocks)
                 for (Block bl : b)
                     if (bl.getY() > 0 && bl.getY() < height)
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     public void setup() {
         notif = findViewById(R.id.textView5);
         drill = new Player((ImageView) findViewById(R.id.drill), (ImageView) findViewById(R.id.drillBound), blocks, width, this);
-        drill.setYPos((int)(height*0.4));
+        drill.setYPos((int) (height * 0.4));
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
                 blocks[x][y] = new Block(y, x, width, this);
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].setSize();
             }
         }
-        for(int x =0;x< trailCount;x++){
+        for (int x = 0; x < trailCount; x++) {
             ImageView tr = new ImageView(this);
             tr.setImageResource(R.drawable.drill_trail2);
             tr.setX(-1000);
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
                 } else {
                     borders[x][y].setImageResource(R.drawable.dirt_border2);
-                    borders[x][y].setX((int)(width *0.725));
+                    borders[x][y].setX((int) (width * 0.725));
                 }
                 borders[x][y].setY(width / 4 * x);
                 rl.addView(borders[x][y]);
@@ -140,18 +140,18 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].update();
             }
         }
-        trail.get(0).setX((int)(drill.getX()-drill.getWidth()/9));
-        trail.get(0).setY((int)(drill.getY()+drill.getHeight()*0.5));
-        trail.add(trail.size(),trail.get(0));
+        trail.get(0).setX(drill.getX() - drill.getWidth() / 9);
+        trail.get(0).setY((int) (drill.getY() + drill.getHeight() * 0.5));
+        trail.add(trail.size(), trail.get(0));
         trail.remove(0);
-        for(int x = 0;x<trail.size();x++){
-            trail.get(x).setY(trail.get(x).getY()+speed);
-            if(trail.size()>30)
+        for (int x = 0; x < trail.size(); x++) {
+            trail.get(x).setY(trail.get(x).getY() + speed);
+            if (trail.size() > 30)
                 trail.remove(0);
         }
-        if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true)||lives<1)
+        if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true) || lives < 1)
             goingDown = false;
-        if(blocks[0][0].getY() >300 && goingDown == false)
+        if (blocks[0][0].getY() > 300 && goingDown == false)
             endGame();
     }
 

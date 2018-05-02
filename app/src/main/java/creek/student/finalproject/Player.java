@@ -5,17 +5,11 @@ import android.app.Activity;
 import android.graphics.Rect;
 import android.widget.ImageView;
 
-//Todo add comments
-//Todo Make lines 36-47 a switch statement
-//Todo Make something with hit function
-//Score and lives work, just the text is behind the blocks so you cant see it. that needs to be fixed
-//fixed. layout.addview on anything makes it go back to front. keep that in mind when rearranging lines in setup
-//Everything else should be good
-
 public class Player extends Item {
     private ImageView img;
     private ImageView hitBox;
     private int frame = 0;
+    private int lives = 10;
 
     private Block[][] blocks;
 
@@ -31,10 +25,10 @@ public class Player extends Item {
 
     @Override
     public void update() {
-        img.setX(getX()-img.getWidth()/2);
+        img.setX(getX() - img.getWidth() / 2);
         img.setY(getY());
         hitBox.setX(getX());
-        hitBox.setY((int)(img.getY()+img.getHeight()*0.9));
+        hitBox.setY((int) (img.getY() + img.getHeight() * 0.9));
     }
 
     public void nextFrame() {
@@ -54,7 +48,7 @@ public class Player extends Item {
     }
 
     public void hit() {
-
+        lives--;
     }
 
     public boolean intersected(Block b) {

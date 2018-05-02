@@ -5,12 +5,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 
-public class Block extends Item implements BlockType{
-
-    //Todo make sure not 4 blocks in one row
-    //Todo add comments
-    //Everything else should be good
-
+public class Block extends Item implements BlockType {
     private ImageView img;
     private boolean isHit;
     private int type;
@@ -22,28 +17,28 @@ public class Block extends Item implements BlockType{
         img.setImageResource(R.drawable.dirt_tile);
         int num = (int) (Math.random() * 100);
         if (yPos % 2 != 0) {
-            if (num <= 40) {
+            if (num <= 70) {
                 img.setImageResource(R.drawable.dirt_tile);
                 setType(0);
                 setPoints(10);
             }
-            if (num <= 60 && num > 40) {
+            if (num <= 80 && num > 70) {
                 img.setImageResource(R.drawable.ore1_tile);
                 setType(1);
                 setPoints(100);
             }
-            if (num <= 80 && num > 60) {
+            if (num <= 90 && num > 80) {
                 img.setImageResource(R.drawable.ore2_tile);
                 setType(2);
                 setPoints(100);
             }
-            if (num <= 100 && num > 80) {
+            if (num <= 100 && num > 90) {
                 img.setImageResource(R.drawable.ore3_tile);
                 setType(3);
                 setPoints(100);
             }
         }
-        if(getY()==0)
+        if (getY() == 0)
             img.setImageResource(R.drawable.grass_tile);
     }
 
@@ -69,8 +64,20 @@ public class Block extends Item implements BlockType{
     public boolean isHit() {
         return isHit;
     }
-    public int getType(){return type;}
-    public int getPoints(){return points;}
-    public void setType(int id){type = id;}
-    public void setPoints(int id){points = id;}
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int id) {
+        type = id;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int id) {
+        points = id;
+    }
 }

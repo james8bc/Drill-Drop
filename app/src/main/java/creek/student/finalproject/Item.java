@@ -3,9 +3,6 @@ package creek.student.finalproject;
 import android.app.Activity;
 import android.widget.ImageView;
 
-//Todo add comments
-//Everything else should be good
-
 public abstract class Item {
     private int x;
     private int y;
