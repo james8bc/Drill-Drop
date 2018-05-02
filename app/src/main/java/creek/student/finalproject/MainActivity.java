@@ -26,6 +26,8 @@ public class MainActivity extends AppCompatActivity {
     private int height;
     private int score = 0;
     private int lives = 10;
+    private TextView scoreView;
+    private TextView livesView;
     private boolean goingDown = true;
 
     @Override
@@ -81,22 +83,29 @@ public class MainActivity extends AppCompatActivity {
                 blocks[x][y].setSize();
             }
         }
+        rl.removeView(drill.getImage());
+        rl.addView(drill.getImage());
         for (int x = 0; x < borders.length; x++) {
             for (int y = 0; y < borders[x].length; y++) {
                 borders[x][y] = new ImageView(this);
                 if (y == 0) {
                     borders[x][y].setImageResource(R.drawable.dirt_border);
                     borders[x][y].setX(0);
+
                 } else {
                     borders[x][y].setImageResource(R.drawable.dirt_border2);
                     borders[x][y].setX(width / 4 * 3);
                 }
-                borders[x][y].setY(width / 4 * y);
+                borders[x][y].setY(width / 4 * x);
                 rl.addView(borders[x][y]);
             }
         }
-        rl.removeView(drill.getImage());
-        rl.addView(drill.getImage());
+        scoreView = findViewById(R.id.textView);
+        livesView = findViewById(R.id.textView2);
+        rl.removeView(scoreView);
+        rl.addView(scoreView);
+        rl.removeView(livesView);
+        rl.addView(livesView);
     }
 
     public void moveBlocks() {

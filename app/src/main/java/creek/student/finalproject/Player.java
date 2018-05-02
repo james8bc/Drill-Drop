@@ -9,6 +9,7 @@ import android.widget.ImageView;
 //Todo Make lines 36-47 a switch statement
 //Todo Make something with hit function
 //Score and lives work, just the text is behind the blocks so you cant see it. that needs to be fixed
+//fixed. layout.addview on anything makes it go back to front. keep that in mind when rearranging lines in setup
 //Everything else should be good
 
 public class Player extends Item {
@@ -29,8 +30,9 @@ public class Player extends Item {
 
     @Override
     public void update() {
-        img.setX(getX());
+        img.setX(getX()-img.getWidth()/2);
         hitBox.setX(getX());
+        hitBox.setY(img.getY()+img.getHeight()/2);
     }
 
     public void nextFrame() {
