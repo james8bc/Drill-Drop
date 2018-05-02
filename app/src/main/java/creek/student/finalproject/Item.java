@@ -8,7 +8,7 @@ public abstract class Item {
     private int y;
     private int width;
     private ImageView img;
-
+//encompasses both player and block classes, dictating the use of coordinates, imageviews, and their getters/setters.
     public void setup(ImageView imageView, Activity _activity, int xPos, int yPos, int w) {
         img = imageView;
         x = xPos;

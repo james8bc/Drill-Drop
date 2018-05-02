@@ -10,7 +10,7 @@ public class Block extends Item implements BlockType {
     private boolean isHit;
     private int type;
     private int points;
-
+//determines likelyhood of each block type, and sets type and poind ID's.
     public Block(int xPos, int yPos, int width, Activity activity) {
         super.setup(new ImageView(activity), activity, width / 4 * xPos, width / 4 * yPos, width);
         img = super.getImage();
@@ -41,7 +41,7 @@ public class Block extends Item implements BlockType {
         if (getY() == 0)
             img.setImageResource(R.drawable.grass_tile);
     }
-
+//getters/setters.
     @Override
     public void update() {
         img.setX(getX());

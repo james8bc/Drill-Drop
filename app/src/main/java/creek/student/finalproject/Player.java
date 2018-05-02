@@ -22,7 +22,7 @@ public class Player extends Item {
         image.setScaleX(image.getScaleX() * 2);
         image.setScaleY(image.getScaleY() * 2);
     }
-
+//updates the coordiinates of the drill.
     @Override
     public void update() {
         img.setX(getX() - img.getWidth() / 2);
@@ -30,7 +30,7 @@ public class Player extends Item {
         hitBox.setX(getX());
         hitBox.setY((int) (img.getY() + img.getHeight() * 0.9));
     }
-
+//animates the drill.
     public void nextFrame() {
         if (frame == 0)
             img.setImageResource(R.drawable.drill_tile);
@@ -65,4 +65,12 @@ public class Player extends Item {
     public int getHeight() {
         return img.getHeight();
     }
+    public void turnAround(){
+        img.setRotation(180);
+    }
+
+    public float getRotation() {
+        return img.getRotation();
+    }
+
 }

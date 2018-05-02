@@ -6,7 +6,7 @@
     android:id="@+id/constraintz"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/dirt_tile"
+    android:background="@drawable/sky_tile"
     tools:context=".MainActivity">
 
 
@@ -81,5 +81,26 @@
         android:text="GAME OVER!"
         android:textColor="@android:color/holo_red_light"
         android:textSize="50sp" />
+
+    <Button
+        android:id="@+id/restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView5"
+        android:layout_centerHorizontal="true"
+        android:onClick="goToMenu"
+        android:fontFamily="@font/vt323"
+        android:text="START OVER" />
+
+    <Button
+        android:id="@+id/pause"
+        android:layout_width="51dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="@font/vt323"
+        android:onClick="pauseGame"
+        android:text="| |"
+        android:textStyle="bold" />
 
 </android.widget.RelativeLayout>

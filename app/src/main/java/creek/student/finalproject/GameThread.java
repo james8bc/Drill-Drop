@@ -5,7 +5,7 @@ package creek.student.finalproject;
 
 import android.os.Handler;
 import android.widget.ImageView;
-
+//overarching method to control all once-per-frame methods, calls itself once every x milliseconds.
 public class GameThread extends Thread {
     Handler handle;
     ImageView c;
@@ -18,7 +18,7 @@ public class GameThread extends Thread {
             try {
                 useClass.update();
             } finally {
-                handle.postDelayed(mStatusChecker, 10);
+                handle.postDelayed(mStatusChecker, 1);
             }
         }
     };

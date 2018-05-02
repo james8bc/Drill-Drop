@@ -1,10 +1,14 @@
 package creek.student.finalproject;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,10 +34,12 @@ public class MainActivity extends AppCompatActivity {
     private TextView depthView;
     private TextView livesView;
     private TextView notif;
+    private Button restart;
+    private Button pause;
     private boolean goingDown = true;
-    private int trailCount = 50;
+    private int trailCount = 200;
     private boolean paused = false;
-
+//initializes most variables and creates the gamethread.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -50,22 +56,21 @@ public class MainActivity extends AppCompatActivity {
         thread = new GameThread(this);
         thread.mStatusChecker.run();
     }
-
+//controls x value of drill.
     public boolean onTouchEvent(MotionEvent event) {
-        drill.setXPos((int) event.getX());
-        drill.update();
+        if(!paused) {
+            drill.setXPos((int) event.getX());
+            drill.update();
+        }
         return true;
     }
-
+//calls once-per-frame block and drill methods.
     public void update() {
         if (!paused) {
             moveBlocks();
-            depthView.setText("Depth: " + ((-blocks[0][0].getY()) - 40));
-            if (goingDown == false) {
+            depthView.setText("Depth: " + ((-blocks[0][0].getY())+320));
+            if (goingDown == false)
                 speed = 40;
-                drill.getImage().setRotation(180);
-                drill.setYPos(height - drill.getHeight() - 400);
-                drill.update();
             }
             if (lives == 0)
                 goingDown = false;
@@ -83,9 +88,13 @@ public class MainActivity extends AppCompatActivity {
                         }
             drill.nextFrame();
         }
-    }
 
+
+//Initializes ImageViews, layers layout items correctly, and fills block border and trail arrays.
     public void setup() {
+        pause = findViewById(R.id.pause);
+        restart = findViewById(R.id.restart);
+        rl.removeView(restart);
         notif = findViewById(R.id.textView5);
         drill = new Player((ImageView) findViewById(R.id.drill), (ImageView) findViewById(R.id.drillBound), blocks, width, this);
         drill.setYPos((int) (height * 0.4));
@@ -131,8 +140,11 @@ public class MainActivity extends AppCompatActivity {
         rl.addView(livesView);
         rl.removeView(depthView);
         rl.addView(depthView);
+        rl.removeView(pause);
+        rl.addView(pause);
     }
 
+    //handles all image updates besides drill.
     public void moveBlocks() {
         for (int x = 0; x < blocks.length; x++) {
             for (int y = 0; y < blocks[x].length; y++) {
@@ -149,17 +161,32 @@ public class MainActivity extends AppCompatActivity {
             if (trail.size() > 30)
                 trail.remove(0);
         }
-        if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true) || lives < 1)
+        if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true)||lives<1) {
             goingDown = false;
-        if (blocks[0][0].getY() > 300 && goingDown == false)
+            drill.turnAround();
+        }
+        if(lives<5)
+            livesView.setTextColor(Color.rgb(255-51*lives,0,0));
+        if(blocks[0][0].getY() >300 && goingDown == false)
             endGame();
     }
 
+    public void goToMenu(View view) {
+        Intent intent = new Intent(this, MainMenu.class);
+        this.finish();
+        startActivity(intent);
+
+    }
+    public void pauseGame(View view){
+        paused = !paused;
+    }
     private void endGame() {
         paused = true;
         notif.setText("GAME OVER!");
         rl.removeView(notif);
         rl.addView(notif);
+        rl.addView(restart);
+
     }
 
 }
