@@ -43,6 +43,8 @@ public class Block extends Item implements BlockType{
                 setPoints(100);
             }
         }
+        if(getY()==0)
+            img.setImageResource(R.drawable.grass_tile);
     }
 
     @Override
