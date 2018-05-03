@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private int drillSpeed = 100;
     private int rAcc = 1;
     private int lAcc = 1;
+    private int speedMult = 2;
 //initializes most variables and creates the gamethread.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,22 +77,24 @@ public class MainActivity extends AppCompatActivity {
 //calls once-per-frame block and drill methods.
     public void update() {
         if (!paused) {
-            moveBlocks();
-            if(Math.abs(touchX-drill.getX())>100){
-                if(touchX<drill.getX())
-                    drill.setXPos(drill.getX()-100);
-                if(touchX>drill.getX())
-                    drill.setXPos(drill.getX()+100);
-            }else{
+            for (int x = 0; x < speedMult; x++) {
+                moveBlocks();
+            }
+            if (Math.abs(touchX - drill.getX()) > 100) {
+                if (touchX < drill.getX())
+                    drill.setXPos(drill.getX() - 100);
+                if (touchX > drill.getX())
+                    drill.setXPos(drill.getX() + 100);
+            } else {
                 drill.setXPos(touchX);
             }
-            drill.lookAt(touchX,touchY);
+            drill.lookAt(touchX, touchY);
             drill.update();
 
-            depthView.setText("Depth: " + ((-blocks[0][0].getY())+320));
+            depthView.setText("Depth: " + ((-blocks[0][0].getY()) + 320));
             if (goingDown == false)
                 speed = 40;
-            }
+
 
             if (lives == 0)
                 goingDown = false;
@@ -108,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
             drill.nextFrame();
+        }
         }
 
 
