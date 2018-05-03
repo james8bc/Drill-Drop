@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     RelativeLayout rl;
     private int speed = -40;
     private GameThread thread;
-    private Block[][] blocks = new Block[200][4];
+    private Block[][] blocks = new Block[250][4];
     private ImageView[][] borders = new ImageView[8][2];
     private ArrayList<ImageView> trail = new ArrayList<ImageView>();
     private Player drill;
@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private Button restart;
     private Button pause;
     private boolean goingDown = true;
-    private int trailCount = 200;
+    private int trailCount = 100;
     private boolean paused = false;
     private int touchX;
     private int touchY;

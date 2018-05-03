@@ -14,7 +14,7 @@ public class GameThread extends Thread {
     Block[][] blocksArr;
     Runnable mStatusChecker = new Runnable() {
         @Override
-        public void run() { //todo get correct speed for screen scrolling
+        public void run() {
             try {
                 useClass.update();
             } finally {
