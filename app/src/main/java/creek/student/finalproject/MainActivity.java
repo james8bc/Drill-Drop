@@ -209,6 +209,7 @@ public class MainActivity extends AppCompatActivity {
     private void endGame() {
         paused = true;
         notif.setText("GAME OVER!");
+        rl.removeView(pause);
         rl.removeView(notif);
         rl.addView(notif);
         rl.removeView(restart);
