@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         width = displayMetrics.widthPixels;
         height = displayMetrics.heightPixels;
-        speed = -width/36;
+        speed = -width/36;//36
         Log.i("ye","height: "+height);
         rl = findViewById(R.id.constraintz);
         setup();
@@ -85,7 +85,9 @@ public class MainActivity extends AppCompatActivity {
             }else{
                 drill.setXPos(touchX);
             }
+            drill.lookAt(touchX,touchY);
             drill.update();
+
             depthView.setText("Depth: " + ((-blocks[0][0].getY())+320));
             if (goingDown == false)
                 speed = 40;
@@ -173,6 +175,7 @@ public class MainActivity extends AppCompatActivity {
         }
         trail.get(0).setX(drill.getX() - drill.getWidth() / 9);
         trail.get(0).setY((int) (drill.getY() + drill.getHeight() * 0.5));
+        //trail.get(0).setRotation(drill.getRotation());
         trail.add(trail.size(), trail.get(0));
         trail.remove(0);
         for (int x = 0; x < trail.size(); x++) {
@@ -182,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         }
         if ((blocks[blocks.length - 1][blocks[0].length - 1].getY() < height && goingDown == true)||lives<1) {
             goingDown = false;
-            drill.turnAround();
+            drill.setGoingDown(false);
         }
         if(lives<5)
             livesView.setTextColor(Color.rgb(255-51*lives,0,0));

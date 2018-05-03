@@ -10,8 +10,9 @@ public class Player extends Item {
     private ImageView hitBox;
     private int frame = 0;
     private int lives = 10;
-
+    private int rotDiff = 10;
     private Block[][] blocks;
+    private boolean goingDown = true;
 
     public Player(ImageView image, ImageView box, Block[][] b, int width, Activity activity) {
         super.setup(image, activity, (int) image.getX(), (int) image.getY(), width);
@@ -22,7 +23,7 @@ public class Player extends Item {
         image.setScaleX(image.getScaleX() * 2);
         image.setScaleY(image.getScaleY() * 2);
     }
-//updates the coordiinates of the drill.
+//updates the coordinates of the drill.
     @Override
     public void update() {
 
@@ -74,4 +75,27 @@ public class Player extends Item {
         return img.getRotation();
     }
 
+    public void lookAt(int x, int y){
+        float rot = img.getRotation();
+        int opp = (int)Math.abs(x-img.getX());
+        int adj = (int)Math.abs(y-img.getY());
+        double angle = Math.atan2(opp,adj);
+        if(x>img.getX())
+        {
+            rot = 360-(float)Math.toDegrees(angle);
+        }
+        else{rot = (float)Math.toDegrees(angle);}
+        if(goingDown)
+            img.setRotation(rot+rotDiff);
+        else
+            img.setRotation(-(rot+rotDiff*0.75f-180));
+//        if(x<img.getX())
+//        {
+//            rot = (float)Math.toDegrees(angle);
+//        }
+    }
+
+    public void setGoingDown(boolean going) {
+        goingDown = going;
+    }
 }
